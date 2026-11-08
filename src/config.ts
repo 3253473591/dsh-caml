@@ -1,6 +1,7 @@
 import { isAbsolute, join, resolve } from 'node:path'
 
 import { CamlError } from './errors.js'
+import { PREDICATE_PATTERN } from './domain/validate.js'
 import type { Strategy } from './domain/types.js'
 
 export interface CamlConfig {
@@ -69,6 +70,9 @@ export function resolveConfig(raw: unknown, env: ConfigEnv = {}): CamlConfig {
   const byPredicateRaw = isRecord(strategiesRaw.byPredicate) ? strategiesRaw.byPredicate : {}
   const byPredicate: Record<string, Strategy> = {}
   for (const [predicate, strategy] of Object.entries(byPredicateRaw)) {
+    if (!PREDICATE_PATTERN.test(predicate)) {
+      throw new CamlError('ERR-CONF-001', `strategies.byPredicate 的 key 不是合法 predicate：${predicate}`)
+    }
     byPredicate[predicate] = readStrategy(strategy, `strategies.byPredicate[${predicate}]`)
   }
 
