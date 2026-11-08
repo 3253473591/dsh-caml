@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# build output
+lib/
+dist/
+
+# local tmp / scratch
+.tmp/
+*.log
+
+# local databases (runtime data, never commit)
+*.db
+*.db-wal
+*.db-shm
+
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
