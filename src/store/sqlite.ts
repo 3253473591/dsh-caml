@@ -1,5 +1,6 @@
 import { DatabaseSync } from 'node:sqlite'
-import { closeSync, openSync, readSync, statSync } from 'node:fs'
+import { closeSync, mkdirSync, openSync, readSync, statSync } from 'node:fs'
+import { dirname } from 'node:path'
 
 import { CamlError, isCamlError } from '../errors.js'
 import { planAdjudication } from '../domain/adjudicator.js'
@@ -465,6 +466,13 @@ function assertNotForeignFile(dbPath: string): void {
 
 /** Open (or create) the database at `dbPath`, apply pragmas and migrate the schema. */
 export async function openStore(dbPath: string, options: StoreOptions = {}): Promise<SqliteStore> {
+  try {
+    mkdirSync(dirname(dbPath), { recursive: true })
+  } catch (error) {
+    throw new CamlError('ERR-STORE-001', `无法创建记忆库目录：${dirname(dbPath)}`, {
+      details: error instanceof Error ? error.message : String(error),
+    })
+  }
   assertNotForeignFile(dbPath)
   let db: DatabaseSync
   try {
