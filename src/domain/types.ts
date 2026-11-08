@@ -31,4 +31,30 @@ export interface NewFactInput {
   observedAt: number
   sourceSession?: string | null
   metadata?: Record<string, unknown> | null
+  strategy?: Strategy
+}
+
+export interface AdjudicationPlan {
+  insert: Fact
+  close: Array<{
+    id: string
+    validUntil: number
+    status: 'superseded'
+    supersededBy: string
+  }>
+  relations: Array<{
+    fromFactId: string
+    toFactId: string
+    relationType: RelationType
+  }>
+  log: {
+    id: string
+    subject: string
+    predicate: string
+    conflictFactIds: string[]
+    chosenStrategy: Strategy
+    resultFactId: string
+    reason: string
+    createdAt: number
+  }
 }

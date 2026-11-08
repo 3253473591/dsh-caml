@@ -12,7 +12,7 @@ CREATE TABLE facts (
   weight         REAL NOT NULL DEFAULT 1.0 CHECK (weight >= 0.0 AND weight <= 1.0),
   valid_from     INTEGER NOT NULL,
   valid_until    INTEGER,
-  superseded_by  TEXT REFERENCES facts(id),
+  superseded_by  TEXT REFERENCES facts(id) DEFERRABLE INITIALLY DEFERRED,
   created_at     INTEGER NOT NULL,
   source_session TEXT,
   metadata       TEXT,

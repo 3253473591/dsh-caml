@@ -33,7 +33,7 @@ CREATE TABLE facts (
   weight         REAL NOT NULL DEFAULT 1.0 CHECK (weight >= 0.0 AND weight <= 1.0),
   valid_from     INTEGER NOT NULL,          -- epoch ms, UTC
   valid_until    INTEGER,                   -- NULL = 仍为真
-  superseded_by  TEXT REFERENCES facts(id),
+  superseded_by  TEXT REFERENCES facts(id) DEFERRABLE INITIALLY DEFERRED,
   created_at     INTEGER NOT NULL,          -- 系统得知时间
   source_session TEXT,
   metadata       TEXT,                      -- JSON 文本，可空

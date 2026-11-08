@@ -1,8 +1,16 @@
-import type { Fact, NewFactInput } from '../domain/types.js'
+import type { Fact, NewFactInput, RelationType, Strategy } from '../domain/types.js'
+
+export interface AdjudicationSummary {
+  id: string
+  previous: Array<{ id: string; object: string; weight: number; validFrom: number; validUntil: number }>
+  relation: RelationType
+}
 
 export interface RememberResult {
   fact: Fact
-  action: 'created' | 'duplicate'
+  action: 'created' | 'duplicate' | 'superseded' | 'transferred' | 'decayed'
+  strategy?: Strategy
+  adjudication?: AdjudicationSummary
 }
 
 export interface RecallQuery {

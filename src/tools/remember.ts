@@ -36,8 +36,8 @@ export function makeRememberTool(store: FactStore, config: CamlConfig): ToolRegi
       return {
         fact: toFactView(result.fact),
         action: result.action,
-        strategy: null,
-        adjudication: null,
+        strategy: result.strategy ?? null,
+        adjudication: result.adjudication ?? null,
       }
     },
   }

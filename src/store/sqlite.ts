@@ -1,15 +1,21 @@
 import { DatabaseSync } from 'node:sqlite'
 
 import { CamlError, isCamlError } from '../errors.js'
+import { planAdjudication } from '../domain/adjudicator.js'
 import { objectKey } from '../domain/normalize.js'
 import { assertObject, assertPredicate, assertSubject } from '../domain/validate.js'
-import { newFactId } from '../domain/id.js'
-import type { Fact, FactStatus, NewFactInput } from '../domain/types.js'
+import { newAdjudicationId, newFactId } from '../domain/id.js'
+import type { AdjudicationPlan, Fact, FactStatus, NewFactInput, Strategy } from '../domain/types.js'
 import { ensureSchema } from './migrate.js'
 import type { FactStore, RecallQuery, RecallResult, RememberResult } from './port.js'
 
 const FUTURE_SKEW_MS = 5 * 60 * 1000
 const DEFAULT_LIMIT = 20
+
+const ACTION_BY_STRATEGY: Record<Exclude<Strategy, 'weighted_decay'>, RememberResult['action']> = {
+  supersede: 'superseded',
+  versioned_transfer: 'transferred',
+}
 
 interface FactRow {
   id: string
@@ -42,6 +48,11 @@ const rowToFact = (row: FactRow): Fact => ({
 })
 
 const escapeLike = (value: string): string => value.replace(/[\\%_]/g, '\\$&')
+
+const INSERT_FACT = `INSERT INTO facts
+  (id, subject, predicate, object, status, weight, valid_from, valid_until,
+   superseded_by, created_at, source_session, metadata)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 export class SqliteStore implements FactStore {
   readonly #db: DatabaseSync
@@ -88,49 +99,61 @@ export class SqliteStore implements FactStore {
       throw new CamlError('ERR-STATE-002', '不允许补写历史：新事实时间早于或等于当前事实')
     }
 
-    if (currentFacts.length > 0) {
-      // Replaced by the adjudicator in T2.1.
-      throw new CamlError('ERR-INT-001', '冲突裁决尚未实现（T2.1）')
+    const strategy: Strategy = input.strategy ?? 'supersede'
+    const id = newFactId(now)
+
+    if (currentFacts.length === 0) {
+      const fact: Fact = {
+        id,
+        subject,
+        predicate,
+        object,
+        status: 'active',
+        weight: 1,
+        validFrom: observedAt,
+        validUntil: null,
+        supersededBy: null,
+        createdAt: now,
+        sourceSession: input.sourceSession ?? null,
+        metadata: input.metadata ?? null,
+      }
+      this.#insertFact(fact)
+      return { fact, action: 'created' }
     }
 
-    const fact: Fact = {
-      id: newFactId(now),
-      subject,
-      predicate,
-      object,
-      status: 'active',
-      weight: 1,
-      validFrom: observedAt,
-      validUntil: null,
-      supersededBy: null,
-      createdAt: now,
-      sourceSession: input.sourceSession ?? null,
-      metadata: input.metadata ?? null,
+    const plan = planAdjudication({
+      current: currentFacts,
+      incoming: {
+        subject,
+        predicate,
+        object,
+        observedAt,
+        sourceSession: input.sourceSession ?? null,
+        metadata: input.metadata ?? null,
+      },
+      strategy,
+      now,
+      newFactId: id,
+      newAdjudicationId: newAdjudicationId(now),
+    })
+    this.#applyPlan(plan)
+
+    return {
+      fact: plan.insert,
+      action: ACTION_BY_STRATEGY[strategy as Exclude<Strategy, 'weighted_decay'>],
+      strategy,
+      adjudication: {
+        id: plan.log.id,
+        previous: currentFacts.map((fact) => ({
+          id: fact.id,
+          object: fact.object,
+          weight: fact.weight,
+          validFrom: fact.validFrom,
+          validUntil: observedAt,
+        })),
+        relation: plan.relations[0]?.relationType ?? 'SUPERSEDES',
+      },
     }
-
-    this.#db
-      .prepare(
-        `INSERT INTO facts
-           (id, subject, predicate, object, status, weight, valid_from, valid_until,
-            superseded_by, created_at, source_session, metadata)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      )
-      .run(
-        fact.id,
-        fact.subject,
-        fact.predicate,
-        fact.object,
-        fact.status,
-        fact.weight,
-        fact.validFrom,
-        fact.validUntil,
-        fact.supersededBy,
-        fact.createdAt,
-        fact.sourceSession,
-        fact.metadata === null ? null : JSON.stringify(fact.metadata),
-      )
-
-    return { fact, action: 'created' }
   }
 
   async recall(query: RecallQuery = {}): Promise<RecallResult> {
@@ -175,6 +198,68 @@ export class SqliteStore implements FactStore {
 
   async close(): Promise<void> {
     this.#db.close()
+  }
+
+  #insertFact(fact: Fact): void {
+    this.#db
+      .prepare(INSERT_FACT)
+      .run(
+        fact.id,
+        fact.subject,
+        fact.predicate,
+        fact.object,
+        fact.status,
+        fact.weight,
+        fact.validFrom,
+        fact.validUntil,
+        fact.supersededBy,
+        fact.createdAt,
+        fact.sourceSession,
+        fact.metadata === null ? null : JSON.stringify(fact.metadata),
+      )
+  }
+
+  #applyPlan(plan: AdjudicationPlan): void {
+    this.#db.exec('BEGIN IMMEDIATE')
+    try {
+      const close = this.#db.prepare(
+        'UPDATE facts SET valid_until = ?, status = ?, superseded_by = ? WHERE id = ?',
+      )
+      for (const entry of plan.close) {
+        close.run(entry.validUntil, entry.status, entry.supersededBy, entry.id)
+      }
+
+      this.#insertFact(plan.insert)
+
+      const relation = this.#db.prepare(
+        'INSERT INTO fact_relations (from_fact_id, to_fact_id, relation_type, created_at) VALUES (?, ?, ?, ?)',
+      )
+      for (const entry of plan.relations) {
+        relation.run(entry.fromFactId, entry.toFactId, entry.relationType, plan.log.createdAt)
+      }
+
+      this.#db
+        .prepare(
+          `INSERT INTO adjudication_log
+             (id, subject, predicate, conflict_fact_ids, chosen_strategy, result_fact_id, reason, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        )
+        .run(
+          plan.log.id,
+          plan.log.subject,
+          plan.log.predicate,
+          JSON.stringify(plan.log.conflictFactIds),
+          plan.log.chosenStrategy,
+          plan.log.resultFactId,
+          plan.log.reason,
+          plan.log.createdAt,
+        )
+
+      this.#db.exec('COMMIT')
+    } catch (error) {
+      this.#db.exec('ROLLBACK')
+      throw error
+    }
   }
 }
 
