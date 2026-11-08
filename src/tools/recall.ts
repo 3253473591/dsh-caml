@@ -7,7 +7,7 @@ import type { ToolRegistration } from './register.js'
 export function makeRecallTool(store: FactStore, config: CamlConfig): ToolRegistration {
   return {
     name: 'caml-recall',
-    description: '只读。返回默认召回集合（当前有效事实），支持 asOf 历史查询。',
+    description: '只读。返回当前有效事实。问"现在/当前"用它；问"以前/之前"请直接用 caml-audit，不要用本工具猜历史。',
     parameters: {
       type: 'object',
       additionalProperties: false,

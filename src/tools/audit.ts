@@ -9,7 +9,7 @@ const iso = (ms: number | null): string | null => (ms === null ? null : new Date
 export function makeAuditTool(store: FactStore): ToolRegistration {
   return {
     name: 'caml-audit',
-    description: '只读。返回某 (subject, predicate) 的完整版本时间线、裁决记录与当前值。',
+    description: '只读。一次调用返回某 (subject, predicate) 的完整版本时间线（含已取代的旧值）、裁决记录与当前值，足以回答"以前/之前是什么"。不要重复调用；键请从 caml-recall 的结果里取。',
     parameters: {
       type: 'object',
       additionalProperties: false,

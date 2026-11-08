@@ -9,7 +9,23 @@ test('plugin exposes the stable name and an apply function', () => {
   assert.equal(typeof apply, 'function')
 })
 
-import { renderRecall } from '../../src/tools/render.js'
+import { renderAudit, renderRecall } from '../../src/tools/render.js'
+
+test('audit render lists every timeline entry, not just the summary', () => {
+  const blocks = renderAudit({}, {
+    subject: '项目',
+    predicate: '负责人',
+    summary: { versions: 2, current: { object: '李四' } },
+    timeline: [
+      { object: '张三', status: 'superseded', validFrom: '2026-09-01T00:00:00.000Z', validUntil: '2026-10-15T00:00:00.000Z' },
+      { object: '李四', status: 'active', validFrom: '2026-10-15T00:00:00.000Z', validUntil: null },
+    ],
+  })
+  const text = blocks.map((block) => block.text).join('\n')
+  assert.ok(text.includes('张三'))
+  assert.ok(text.includes('superseded'))
+  assert.ok(text.includes('李四'))
+})
 
 test('render follows the DSH contract (args, value) -> ContentBlock[]', () => {
   const blocks = renderRecall({ subject: '我' }, { facts: [], truncated: false })

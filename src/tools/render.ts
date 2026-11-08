@@ -56,11 +56,17 @@ export function renderRecall(_args: unknown, value: unknown): TextBlock[] {
 }
 
 export function renderAudit(_args: unknown, value: unknown): TextBlock[] {
-  const { subject, predicate, summary } = value as {
+  const { subject, predicate, summary, timeline } = value as {
     subject: string
     predicate: string
     summary: { versions: number; current: FactView | null }
+    timeline?: Array<{ object: string; status: string; validFrom: string; validUntil: string | null }>
   }
   const current = summary.current === null ? '无' : short(summary.current)
-  return [{ type: 'text', text: `${subject} · ${predicate}：${summary.versions} 个版本，当前 ${current}` }]
+  const header = `${subject} · ${predicate}：${summary.versions} 个版本，当前 ${current}`
+  const lines = (timeline ?? []).map((entry, index) => {
+    const until = entry.validUntil === null ? '至今' : entry.validUntil
+    return `${index + 1}. ${entry.object} [${entry.status}] ${entry.validFrom} → ${until}`
+  })
+  return [{ type: 'text', text: [header, ...lines].join('\n') }]
 }

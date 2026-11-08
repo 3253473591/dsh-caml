@@ -8,7 +8,7 @@ import { assertPredicate } from '../domain/validate.js'
 export function makeRememberTool(store: FactStore, config: CamlConfig): ToolRegistration {
   return {
     name: 'caml-remember',
-    description: '写入一条记忆事实；同一 (subject, predicate) 出现冲突时按策略裁决。会改变记忆状态。',
+    description: '写入一条事实（subject/predicate/object）；用户陈述关于自己或项目的事实时必须调用。冲突时按策略裁决，会改变记忆状态。',
     parameters: {
       type: 'object',
       additionalProperties: false,
