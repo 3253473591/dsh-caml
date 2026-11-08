@@ -27,6 +27,14 @@ export function assertLimit(value: unknown): number {
   return value
 }
 
+export function assertAuditLimit(value: unknown): number {
+  if (value === undefined) return 100
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 1 || value > 200) {
+    throw new CamlError('ERR-INPUT-009', 'audit 的 limit 必须是 1–200 的整数')
+  }
+  return value
+}
+
 export function optionalMinWeight(value: unknown): number | undefined {
   if (value === undefined) return undefined
   if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value > 1) {

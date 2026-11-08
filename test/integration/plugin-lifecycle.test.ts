@@ -55,6 +55,34 @@ test('audit returns the empty-coordinate contract', async () => {
   })
 })
 
+test('audit tool returns ISO timestamps, version count and adjudications', async () => {
+  await withTempDir(async (dir) => {
+    const { ctx, tools } = createFakeCtx()
+    const dispose = await apply(ctx, { storage: { dbPath: join(dir, 'caml.db') } })
+    const remember = tools.get('caml-remember')
+    const audit = tools.get('caml-audit')
+    assert.ok(remember && audit)
+
+    await remember.execute({
+      subject: '我', predicate: '目标城市', object: '杭州', observedAt: '2026-01-01T00:00:00Z',
+    })
+    await remember.execute({
+      subject: '我', predicate: '目标城市', object: '上海', observedAt: '2026-02-01T00:00:00Z',
+    })
+
+    const result = await audit.execute({ subject: '我', predicate: '目标城市' }) as {
+      summary: { versions: number; current: { object: string } | null }
+      timeline: Array<{ validFrom: string }>
+      adjudications: unknown[]
+    }
+    assert.equal(result.summary.versions, 2)
+    assert.equal(result.summary.current?.object, '上海')
+    assert.equal(typeof result.timeline[0]?.validFrom, 'string')
+    assert.equal(result.adjudications.length, 1)
+    dispose()
+  })
+})
+
 test('resolveConfig defaults under DSH_HOME and resolves relative paths against cwd', () => {
   const defaults = resolveConfig(undefined, { cwd: resolve('/work'), dshHome: resolve('/home/u/.dsh') })
   assert.equal(defaults.dbPath, join(resolve('/home/u/.dsh'), 'caml', 'caml.db'))

@@ -1,14 +1,15 @@
-import { renderAudit } from './render.js'
+import { renderAudit, toFactView } from './render.js'
 import type { ToolRegistration } from './register.js'
+import { assertAuditLimit } from './common.js'
+import { assertPredicate, assertSubject } from '../domain/validate.js'
+import type { FactStore } from '../store/port.js'
 
-/**
- * Read-only audit surface. T1 registers the empty-coordinate contract;
- * T2.3 replaces the body with the real timeline query.
- */
-export function makeAuditTool(): ToolRegistration {
+const iso = (ms: number | null): string | null => (ms === null ? null : new Date(ms).toISOString())
+
+export function makeAuditTool(store: FactStore): ToolRegistration {
   return {
     name: 'caml-audit',
-    description: '只读。返回某 (subject, predicate) 的完整版本时间线与裁决记录。',
+    description: '只读。返回某 (subject, predicate) 的完整版本时间线、裁决记录与当前值。',
     parameters: {
       type: 'object',
       additionalProperties: false,
@@ -22,13 +23,34 @@ export function makeAuditTool(): ToolRegistration {
     output: { schema: { type: 'object' }, render: renderAudit },
     execute: async (args: unknown) => {
       const input = args as Record<string, unknown>
+      const subject = assertSubject(input.subject)
+      const predicate = assertPredicate(input.predicate)
+      const limit = assertAuditLimit(input.limit)
+
+      const audit = await store.audit(subject, predicate, limit)
       return {
-        subject: input.subject,
-        predicate: input.predicate,
-        summary: { current: null, versions: 0, firstAt: null, lastAt: null },
-        timeline: [],
-        adjudications: [],
-        truncated: { timeline: false, adjudications: false },
+        subject: audit.subject,
+        predicate: audit.predicate,
+        summary: {
+          current: audit.summary.current === null ? null : toFactView(audit.summary.current),
+          versions: audit.summary.versions,
+          firstAt: iso(audit.summary.firstAt),
+          lastAt: iso(audit.summary.lastAt),
+        },
+        timeline: audit.timeline.map((entry) => ({
+          ...toFactView(entry.fact),
+          relation: entry.relation,
+          adjudicationId: entry.adjudicationId,
+        })),
+        adjudications: audit.adjudications.map((entry) => ({
+          id: entry.id,
+          at: iso(entry.at),
+          strategy: entry.strategy,
+          previousIds: entry.previousIds,
+          resultFactId: entry.resultFactId,
+          reason: entry.reason,
+        })),
+        truncated: audit.truncated,
       }
     },
   }

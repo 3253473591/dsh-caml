@@ -5,9 +5,16 @@ import { planAdjudication } from '../domain/adjudicator.js'
 import { objectKey } from '../domain/normalize.js'
 import { assertObject, assertPredicate, assertSubject } from '../domain/validate.js'
 import { newAdjudicationId, newFactId } from '../domain/id.js'
-import type { AdjudicationPlan, Fact, FactStatus, NewFactInput, Strategy } from '../domain/types.js'
+import type { AdjudicationPlan, Fact, FactStatus, NewFactInput, RelationType, Strategy } from '../domain/types.js'
 import { ensureSchema } from './migrate.js'
-import type { FactStore, RecallQuery, RecallResult, RememberResult } from './port.js'
+import type {
+  AuditAdjudication,
+  AuditResult,
+  FactStore,
+  RecallQuery,
+  RecallResult,
+  RememberResult,
+} from './port.js'
 
 const FUTURE_SKEW_MS = 5 * 60 * 1000
 const DEFAULT_LIMIT = 20
@@ -32,8 +39,7 @@ interface FactRow {
   metadata: string | null
 }
 
-const rowToFact = (row: FactRow): Fact => ({
-  id: row.id,
+const rowToFact = (row: FactRow): Fact => ({  id: row.id,
   subject: row.subject,
   predicate: row.predicate,
   object: row.object,
@@ -45,6 +51,26 @@ const rowToFact = (row: FactRow): Fact => ({
   createdAt: row.created_at,
   sourceSession: row.source_session,
   metadata: row.metadata === null ? null : (JSON.parse(row.metadata) as Record<string, unknown>),
+})
+
+interface LogRow {
+  id: string
+  subject: string
+  predicate: string
+  conflict_fact_ids: string
+  chosen_strategy: Strategy
+  result_fact_id: string
+  reason: string
+  created_at: number
+}
+
+const rowToLog = (row: LogRow): AuditAdjudication => ({
+  id: row.id,
+  at: row.created_at,
+  strategy: row.chosen_strategy,
+  previousIds: JSON.parse(row.conflict_fact_ids) as string[],
+  resultFactId: row.result_fact_id,
+  reason: row.reason,
 })
 
 const escapeLike = (value: string): string => value.replace(/[\\%_]/g, '\\$&')
@@ -194,6 +220,89 @@ export class SqliteStore implements FactStore {
 
     const truncated = rows.length > limit
     return { facts: rows.slice(0, limit).map(rowToFact), truncated }
+  }
+
+  async audit(subject: string, predicate: string, limit = 100): Promise<AuditResult> {
+    const factRows = this.#db
+      .prepare(
+        `SELECT * FROM facts WHERE subject = ? AND predicate = ?
+         ORDER BY valid_from ASC, id ASC LIMIT ?`,
+      )
+      .all(subject, predicate, limit) as unknown as FactRow[]
+
+    const logRows = this.#db
+      .prepare(
+        `SELECT * FROM adjudication_log WHERE subject = ? AND predicate = ?
+         ORDER BY created_at ASC, id ASC LIMIT ?`,
+      )
+      .all(subject, predicate, limit) as unknown as LogRow[]
+
+    const counts = this.#db
+      .prepare(
+        `SELECT
+           (SELECT COUNT(*) FROM facts WHERE subject = ? AND predicate = ?) AS versions,
+           (SELECT COUNT(*) FROM adjudication_log WHERE subject = ? AND predicate = ?) AS adjudications,
+           (SELECT MIN(valid_from) FROM facts WHERE subject = ? AND predicate = ?) AS first_at,
+           (SELECT MAX(COALESCE(valid_until, valid_from)) FROM facts WHERE subject = ? AND predicate = ?) AS last_at`,
+      )
+      .get(subject, predicate, subject, predicate, subject, predicate, subject, predicate) as {
+        versions: number
+        adjudications: number
+        first_at: number | null
+        last_at: number | null
+      }
+
+    const currentRow = this.#db
+      .prepare(
+        `SELECT * FROM facts WHERE subject = ? AND predicate = ?
+           AND status = 'active' AND valid_until IS NULL LIMIT 1`,
+      )
+      .get(subject, predicate) as FactRow | undefined
+
+    const facts = factRows.map(rowToFact)
+    const adjudications = logRows.map(rowToLog)
+
+    const relations = facts.length === 0
+      ? []
+      : (this.#db
+        .prepare(
+          `SELECT to_fact_id, relation_type FROM fact_relations
+           WHERE to_fact_id IN (${facts.map(() => '?').join(',')})`,
+        )
+        .all(...facts.map((fact) => fact.id)) as unknown as Array<{
+        to_fact_id: string
+        relation_type: RelationType
+      }>)
+
+    const relationByTo = new Map(relations.map((row) => [row.to_fact_id, row.relation_type]))
+    const createdBy = new Map(adjudications.map((entry) => [entry.resultFactId, entry.id]))
+    const closedBy = new Map<string, string>()
+    for (const entry of adjudications) {
+      for (const previousId of entry.previousIds) {
+        closedBy.set(previousId, entry.id)
+      }
+    }
+
+    return {
+      subject,
+      predicate,
+      summary: {
+        current: currentRow === undefined ? null : rowToFact(currentRow),
+        versions: Number(counts.versions),
+        firstAt: counts.first_at,
+        lastAt: counts.last_at,
+      },
+      timeline: facts.map((fact) => ({
+        fact,
+        relation: relationByTo.get(fact.id) ?? null,
+        adjudicationId: closedBy.get(fact.id) ?? createdBy.get(fact.id) ?? null,
+      })),
+      adjudications,
+      truncated: {
+        timeline: Number(counts.versions) > facts.length,
+        adjudications: Number(counts.adjudications) > adjudications.length,
+      },
+    }
   }
 
   async close(): Promise<void> {

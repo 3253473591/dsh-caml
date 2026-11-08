@@ -22,7 +22,7 @@ export function registerTools(ctx: ToolsCtx, store: FactStore, config: CamlConfi
   const tools = [
     makeRememberTool(store, config),
     makeRecallTool(store, config),
-    makeAuditTool(),
+    makeAuditTool(store),
   ]
   return tools.map((tool) => ctx.tools.register(tool))
 }
