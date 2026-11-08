@@ -1,0 +1,87 @@
+{
+  "total": 16,
+  "passed": 16,
+  "failed": 0,
+  "cases": [
+    {
+      "id": "ET-A-01",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-A-02",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-A-03",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-A-04",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-A-05",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-A-06",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-B-01",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-B-02",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-B-03",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-B-04",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-B-05",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-C-01",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-C-02",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-C-03",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-C-04",
+      "pass": true,
+      "checks": []
+    },
+    {
+      "id": "ET-C-05",
+      "pass": true,
+      "checks": []
+    }
+  ]
+}

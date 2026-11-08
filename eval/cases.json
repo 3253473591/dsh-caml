@@ -1,0 +1,119 @@
+[
+  {
+    "id": "ET-A-01", "strategy": "supersede",
+    "given": [{ "subject": "我", "predicate": "目标城市", "object": "杭州", "observedAt": "2026-10-01T00:00:00Z" }],
+    "when": { "subject": "我", "predicate": "目标城市", "object": "上海", "observedAt": "2026-11-01T00:00:00Z" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["上海"], "auditVersions": 2, "auditCurrent": "上海", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-A-02", "strategy": "supersede",
+    "given": [{ "subject": "我", "predicate": "目标岗位", "object": "后端", "observedAt": "2026-10-01T00:00:00Z" }],
+    "when": { "subject": "我", "predicate": "目标岗位", "object": "数据工程", "observedAt": "2026-11-01T00:00:00Z" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["数据工程"], "auditVersions": 2, "auditCurrent": "数据工程", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-A-03", "strategy": "supersede",
+    "given": [{ "subject": "我", "predicate": "当前雇主", "object": "甲公司", "observedAt": "2026-10-01T00:00:00Z" }],
+    "when": { "subject": "我", "predicate": "当前雇主", "object": "乙公司", "observedAt": "2026-11-01T00:00:00Z" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["乙公司"], "auditVersions": 2, "auditCurrent": "乙公司", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-A-04", "strategy": "supersede",
+    "given": [{ "subject": "我", "predicate": "期望薪资", "object": "15k", "observedAt": "2026-10-01T00:00:00Z" }],
+    "when": { "subject": "我", "predicate": "期望薪资", "object": "20k", "observedAt": "2026-11-01T00:00:00Z" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["20k"], "auditVersions": 2, "auditCurrent": "20k", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-A-05", "strategy": "supersede",
+    "given": [
+      { "subject": "我", "predicate": "目标城市", "object": "A", "observedAt": "2026-09-01T00:00:00Z" },
+      { "subject": "我", "predicate": "目标城市", "object": "B", "observedAt": "2026-10-01T00:00:00Z" }
+    ],
+    "when": { "subject": "我", "predicate": "目标城市", "object": "C", "observedAt": "2026-11-01T00:00:00Z" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["C"], "auditVersions": 3, "auditCurrent": "C", "statuses": ["superseded", "superseded", "active"] }
+  },
+  {
+    "id": "ET-A-06", "strategy": "supersede",
+    "given": [
+      { "subject": "我", "predicate": "目标城市", "object": "杭州", "observedAt": "2026-09-01T00:00:00Z" },
+      { "subject": "我", "predicate": "目标城市", "object": "上海", "observedAt": "2026-10-01T00:00:00Z" }
+    ],
+    "when": { "subject": "我", "predicate": "目标城市", "object": "杭州", "observedAt": "2026-11-01T00:00:00Z" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["杭州"], "auditVersions": 3, "auditCurrent": "杭州", "statuses": ["superseded", "superseded", "active"] }
+  },
+  {
+    "id": "ET-B-01", "strategy": "versioned_transfer",
+    "given": [{ "subject": "支付项目", "predicate": "负责人", "object": "张三", "observedAt": "2026-09-01T00:00:00Z" }],
+    "when": { "subject": "支付项目", "predicate": "负责人", "object": "李四", "observedAt": "2026-10-15T00:00:00Z" },
+    "expect": { "action": "transferred", "relation": "TRANSFERS_TO", "recallDefault": ["李四"], "auditVersions": 2, "auditCurrent": "李四", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-B-02", "strategy": "versioned_transfer",
+    "given": [{ "subject": "服务", "predicate": "值班人", "object": "王五", "observedAt": "2026-09-01T00:00:00Z" }],
+    "when": { "subject": "服务", "predicate": "值班人", "object": "赵六", "observedAt": "2026-10-15T00:00:00Z" },
+    "expect": { "action": "transferred", "relation": "TRANSFERS_TO", "recallDefault": ["赵六"], "auditVersions": 2, "auditCurrent": "赵六", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-B-03", "strategy": "versioned_transfer",
+    "given": [{ "subject": "预算", "predicate": "审批人", "object": "甲", "observedAt": "2026-09-01T00:00:00Z" }],
+    "when": { "subject": "预算", "predicate": "审批人", "object": "乙", "observedAt": "2026-10-15T00:00:00Z" },
+    "expect": { "action": "transferred", "relation": "TRANSFERS_TO", "recallDefault": ["乙"], "auditVersions": 2, "auditCurrent": "乙", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-B-04", "strategy": "versioned_transfer",
+    "given": [
+      { "subject": "项目", "predicate": "负责人", "object": "甲", "observedAt": "2026-08-01T00:00:00Z" },
+      { "subject": "项目", "predicate": "负责人", "object": "乙", "observedAt": "2026-09-01T00:00:00Z" }
+    ],
+    "when": { "subject": "项目", "predicate": "负责人", "object": "丙", "observedAt": "2026-10-01T00:00:00Z" },
+    "expect": { "action": "transferred", "relation": "TRANSFERS_TO", "recallDefault": ["丙"], "auditVersions": 3, "auditCurrent": "丙", "statuses": ["superseded", "superseded", "active"] }
+  },
+  {
+    "id": "ET-B-05", "strategy": "versioned_transfer",
+    "given": [{ "subject": "项目", "predicate": "负责人", "object": "张三", "observedAt": "2026-09-01T00:00:00Z" }],
+    "when": { "subject": "项目", "predicate": "负责人", "object": "李四", "observedAt": "2026-10-15T00:00:00Z" },
+    "expect": { "action": "transferred", "relation": "TRANSFERS_TO", "recallDefault": ["李四"], "recallAsOf": { "2026-09-15T00:00:00Z": ["张三"] }, "auditVersions": 2, "auditCurrent": "李四", "statuses": ["superseded", "active"] }
+  },
+  {
+    "id": "ET-C-01", "strategy": "weighted_decay",
+    "given": [{ "subject": "我", "predicate": "住宿偏好", "object": "青旅", "observedAt": "2026-09-01T00:00:00Z" }],
+    "when": { "subject": "我", "predicate": "住宿偏好", "object": "酒店", "observedAt": "2026-10-01T00:00:00Z" },
+    "expect": { "action": "decayed", "relation": "DECAYS_FROM", "recallDefault": ["酒店"], "auditVersions": 2, "auditCurrent": "酒店", "statuses": ["decayed", "active"] }
+  },
+  {
+    "id": "ET-C-02", "strategy": "weighted_decay",
+    "given": [
+      { "subject": "我", "predicate": "住宿偏好", "object": "青旅", "observedAt": "2026-08-01T00:00:00Z" },
+      { "subject": "我", "predicate": "住宿偏好", "object": "酒店", "observedAt": "2026-09-01T00:00:00Z" }
+    ],
+    "when": { "subject": "我", "predicate": "住宿偏好", "object": "民宿", "observedAt": "2026-10-01T00:00:00Z" },
+    "expect": { "action": "decayed", "relation": "DECAYS_FROM", "recallDefault": ["民宿"], "auditVersions": 3, "auditCurrent": "民宿", "statuses": ["decayed", "decayed", "active"], "weights": { "青旅": 0.25, "酒店": 0.5, "民宿": 1 } }
+  },
+  {
+    "id": "ET-C-03", "strategy": "weighted_decay",
+    "given": [
+      { "subject": "我", "predicate": "交通偏好", "object": "火车", "observedAt": "2026-08-01T00:00:00Z" },
+      { "subject": "我", "predicate": "交通偏好", "object": "飞机", "observedAt": "2026-09-01T00:00:00Z" }
+    ],
+    "when": { "subject": "我", "predicate": "交通偏好", "object": "自驾", "observedAt": "2026-10-01T00:00:00Z" },
+    "expect": { "action": "decayed", "relation": "DECAYS_FROM", "recallDefault": ["自驾"], "auditVersions": 3, "auditCurrent": "自驾", "statuses": ["decayed", "decayed", "active"] }
+  },
+  {
+    "id": "ET-C-04", "strategy": "weighted_decay",
+    "given": [
+      { "subject": "我", "predicate": "住宿偏好", "object": "青旅", "observedAt": "2026-08-01T00:00:00Z" },
+      { "subject": "我", "predicate": "住宿偏好", "object": "酒店", "observedAt": "2026-09-01T00:00:00Z" }
+    ],
+    "when": { "subject": "我", "predicate": "住宿偏好", "object": "民宿", "observedAt": "2026-10-01T00:00:00Z", "strategy": "supersede" },
+    "expect": { "action": "superseded", "relation": "SUPERSEDES", "recallDefault": ["民宿"], "auditVersions": 3, "auditCurrent": "民宿", "statuses": ["superseded", "superseded", "active"] }
+  },
+  {
+    "id": "ET-C-05", "strategy": "weighted_decay",
+    "given": [
+      { "subject": "我", "predicate": "餐饮偏好", "object": "辣", "observedAt": "2026-08-01T00:00:00Z" },
+      { "subject": "我", "predicate": "餐饮偏好", "object": "清淡", "observedAt": "2026-09-01T00:00:00Z" }
+    ],
+    "when": { "subject": "我", "predicate": "餐饮偏好", "object": "素食", "observedAt": "2026-10-01T00:00:00Z" },
+    "expect": { "action": "decayed", "relation": "DECAYS_FROM", "recallDefault": ["素食"], "auditVersions": 3, "auditCurrent": "素食", "statuses": ["decayed", "decayed", "active"], "weights": { "辣": 0.25, "清淡": 0.5, "素食": 1 } }
+  }
+]
