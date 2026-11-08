@@ -1,0 +1,44 @@
+{
+  "name": "dsh-caml",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Conflict-Aware Memory Layer for DeepSeek Harness: explicit adjudication semantics for time-sensitive facts, with an auto-scored conflict eval set.",
+  "type": "module",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node scripts/run-tests.mjs",
+    "eval": "tsx eval/run.ts",
+    "perf": "tsx scripts/perf.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3"
+  }
+}
