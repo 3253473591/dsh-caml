@@ -1,0 +1,3 @@
+﻿DSH 0.2.1-rc.2 evaluatePluginCompatibility(package.json) -> compatible
+method: node --import tsx, importing packages/boot/app-boot/src/plugin-compatibility.ts
+note: 兼容门已过；真实 profile 加载（AC-6 完整项）待第二实例验证。
