@@ -1,0 +1,20 @@
+# NOTICE
+
+This project is a fork of [AieXile/dsh-memory-plugin](https://github.com/AieXile/dsh-memory-plugin)
+version 1.6.0, licensed under the MIT License (Copyright (c) 2026 Aelius).
+
+What was reused:
+
+- The DSH plugin shell: `cordis.patch.yml`, `package.json` bundle shape, `apply(ctx)` entry.
+- The `ctx.tools.register` tool-definition shape (`name` / `description` / `parameters` / `output.schema` / `render`).
+- The `status: active | archived` + `supersedes` / `supersededBy` + rollback idea.
+
+What was rewritten for CAML:
+
+- The storage layer: JSON file replaced with SQLite (`node:sqlite`), schema in `src/store/schema.ts`.
+- The write path: free-text `memory_add` replaced with structured `caml-remember` (`subject` / `predicate` / `object`).
+- The adjudication layer: `supersede` / `versioned_transfer` / `weighted_decay` with a transactional plan (`src/domain/adjudicator.ts`).
+- The read path: `caml-recall` (default + `asOf`) and `caml-audit` (timeline + adjudication log).
+- The client half (title-bar icon / settings page) was removed; this package ships host-side tools only.
+
+Upstream MIT text is preserved in this repository's LICENSE; this NOTICE is informational.

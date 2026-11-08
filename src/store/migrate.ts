@@ -15,7 +15,10 @@ function readUserVersion(db: DatabaseSync): number {
 /** Create or verify the schema. A database from a newer plugin is refused, never migrated down. */
 export function ensureSchema(db: DatabaseSync): void {
   const version = readUserVersion(db)
-  if (version === SCHEMA_VERSION) return
+  if (version === SCHEMA_VERSION) {
+    ensureIndexes(db)
+    return
+  }
   if (version > SCHEMA_VERSION) {
     throw new CamlError(
       'ERR-STORE-003',
@@ -33,4 +36,13 @@ export function ensureSchema(db: DatabaseSync): void {
     db.exec('ROLLBACK')
     throw error
   }
+}
+
+/** Idempotent index backfill for databases created before an index was added. */
+function ensureIndexes(db: DatabaseSync): void {
+  db.exec(`
+    DROP INDEX IF EXISTS ix_facts_recall;
+    CREATE INDEX ix_facts_recall ON facts(weight DESC, valid_from DESC, id ASC)
+      WHERE status = 'active' AND valid_until IS NULL
+  `)
 }

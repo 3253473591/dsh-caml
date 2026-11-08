@@ -26,6 +26,8 @@ CREATE UNIQUE INDEX ux_facts_one_active
 CREATE INDEX ix_facts_pair ON facts(subject, predicate);
 CREATE INDEX ix_facts_current ON facts(status, valid_until);
 CREATE INDEX ix_facts_valid_from ON facts(valid_from);
+CREATE INDEX ix_facts_recall ON facts(weight DESC, valid_from DESC, id ASC)
+  WHERE status = 'active' AND valid_until IS NULL;
 
 CREATE TABLE fact_relations (
   from_fact_id  TEXT NOT NULL REFERENCES facts(id),

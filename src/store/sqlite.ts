@@ -1,4 +1,5 @@
 import { DatabaseSync } from 'node:sqlite'
+import { closeSync, openSync, readSync, statSync } from 'node:fs'
 
 import { CamlError, isCamlError } from '../errors.js'
 import { planAdjudication } from '../domain/adjudicator.js'
@@ -418,8 +419,35 @@ export class SqliteStore implements FactStore {
   }
 }
 
+const SQLITE_HEADER = Buffer.from('SQLite format 3\u0000', 'latin1')
+
+/** Detect a non-SQLite file before SQLite opens it, so we never write over foreign data. */
+function assertNotForeignFile(dbPath: string): void {
+  let size: number
+  try {
+    size = statSync(dbPath).size
+  } catch {
+    return
+  }
+  if (size === 0) return
+  if (size < SQLITE_HEADER.length) {
+    throw new CamlError('ERR-STORE-004', `记忆库损坏：${dbPath}`, { hint: '从备份恢复，见 docs/04 排障' })
+  }
+  const fd = openSync(dbPath, 'r')
+  try {
+    const buffer = Buffer.alloc(SQLITE_HEADER.length)
+    readSync(fd, buffer, 0, buffer.length, 0)
+    if (!buffer.equals(SQLITE_HEADER)) {
+      throw new CamlError('ERR-STORE-004', `记忆库损坏：${dbPath}`, { hint: '从备份恢复，见 docs/04 排障' })
+    }
+  } finally {
+    closeSync(fd)
+  }
+}
+
 /** Open (or create) the database at `dbPath`, apply pragmas and migrate the schema. */
 export async function openStore(dbPath: string, options: StoreOptions = {}): Promise<SqliteStore> {
+  assertNotForeignFile(dbPath)
   let db: DatabaseSync
   try {
     db = new DatabaseSync(dbPath)

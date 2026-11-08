@@ -2,29 +2,99 @@
 
 CAML（Conflict-Aware Memory Layer）：DSH 记忆插件的**冲突裁决层**——对时间敏感事实的冲突给出显式裁决语义，并附带可自动跑分的评测集。
 
-> 状态：**设计阶段**（文档 v1.0.2 已冻结），尚未开始编码。
+> 状态：M1–M4 完成（tag `v0.1.0-m1`…`v0.1.0-m4`）；M5 进行中（真实宿主加载 AC-6、性能 AC-7 未收口）。**尚未发布**。
 
-## 从这里开始
+## 结果
 
-| 文档 | 内容 |
+| 指标 | 本插件 | 上游 `dsh-memory-plugin@1.6.0` |
+|---|---:|---:|
+| 冲突评测（16 场景） | **16 / 16** | 0 / 16 |
+| 默认召回给出正确当前值 | 16 / 16 | 0 / 16 |
+| 能回答"以前是什么" | 16 / 16 | 0 / 16 |
+
+口径与原始数据见 [eval/baseline.md](eval/baseline.md)、[eval/report/report.json](eval/report/report.json)。
+
+## 三个工具
+
+| 工具 | 作用 |
 |---|---|
-| [docs/README.md](docs/README.md) | 文档索引、ID 约定、需求追踪矩阵 |
-| [docs/01-prd.md](docs/01-prd.md) | 产品需求（做什么 / 不做什么 / 里程碑） |
-| [docs/02-api-contract.md](docs/02-api-contract.md) | 三个工具契约与状态迁移表 |
-| [docs/03-data-model.md](docs/03-data-model.md) | SQLite 表、索引、不变量、时间模型 |
-| [docs/04-errors-and-edge-cases.md](docs/04-errors-and-edge-cases.md) | 错误码与边界行为 |
-| [docs/05-non-functional.md](docs/05-non-functional.md) | 性能 / 容错 / 兼容 / 安全指标 |
-| [docs/06-test-plan.md](docs/06-test-plan.md) | 测试分层与 16 条评测用例 |
-| [docs/07-acceptance.md](docs/07-acceptance.md) | AC-1…AC-12 验收标准 |
-| [docs/08-decisions/](docs/08-decisions/README.md) | 5 条 ADR（底座 / 技术栈 / 结构 / 红线 / 边界语义） |
+| `caml-remember` | 写入 `(subject, predicate, object)`；冲突时按策略裁决（取代 / 转移 / 衰减） |
+| `caml-recall` | 只读，默认只回当前有效事实；`asOf` 查"当时为真" |
+| `caml-audit` | 只读，返回完整时间线、裁决记录与当前值 |
 
-## 关键前提
+```jsonc
+// caml-remember
+{ "subject": "我", "predicate": "目标城市", "object": "上海" }
+// → { action: "superseded", strategy: "supersede",
+//     adjudication: { previous: [{ object: "杭州", validUntil: "…" }], relation: "SUPERSEDES" } }
+```
 
-- 运行时：DSH `0.2.1-rc.2`，Node `^22.19.0 || >=24.0.0`。
-- 底座：fork [AieXile/dsh-memory-plugin](https://github.com/AieXile/dsh-memory-plugin) v1.6.0（MIT），保留 `LICENSE` 与 `NOTICE`。
-- 存储：Node 内置 `node:sqlite`，单文件 + WAL；**零运行时依赖**，不引入 MySQL/PostgreSQL/ORM。
-- 工具名：`caml-remember` / `caml-recall` / `caml-audit`。
+## 安装
 
-## 许可
+```bash
+# 1) 构建（发布产物在 lib/）
+npm install && npm run build
 
-MIT（最终交付时随代码补 `LICENSE` 与上游 `NOTICE`）。
+# 2) profile patch 里加一行
+#    name 指向本仓库绝对路径
+- insert:
+    - id: dsh-caml
+      name: 'dsh-caml'
+```
+
+配置（`cordis.patch.yml` 的 `config`）：
+
+```yaml
+config:
+  storage:
+    # 省略 = $DSH_HOME/caml/caml.db；相对路径相对进程 cwd
+    # dbPath: '/absolute/path/caml.db'
+  strategies:
+    default: supersede
+    byPredicate: { role: versioned_transfer, preference: weighted_decay }
+    decayFactor: 0.5
+    minWeight: 0.3
+```
+
+## 三类裁决
+
+| 策略 | 语义 | 旧值 | 关系 |
+|---|---|---|---|
+| `supersede` | 值被更正/过时 | 关窗 + `superseded` | `SUPERSEDES` |
+| `versioned_transfer` | 角色交接 | 关窗 + `superseded` | `TRANSFERS_TO` |
+| `weighted_decay` | 偏好漂移 | 不关窗、降权 `decayed` | `DECAYS_FROM` |
+
+## 性能（10,000 条事实，本机 Node 24）
+
+| 指标 | 实测 p95 | 阈值 | 结论 |
+|---|---:|---:|---|
+| `caml-remember` | 2.6 ms | ≤ 5 ms | ✅ |
+| `caml-audit` | 5.7 ms | ≤ 20 ms | ✅ |
+| `caml-recall`（无关键词） | 22.2 ms | ≤ 15 ms | ❌ 未达标 |
+
+原始数据 [evidence/AC-7/perf.json](evidence/AC-7/perf.json)。recall 的 p95 未达标是当前已知缺口，未用改阈值的方式掩盖。
+
+## 不做的事
+
+向量/语义检索、LLM 参与裁决、待确认冲突队列、自动注入与面板 UI、多租户、外部数据库/ORM、上游历史数据迁移、多模态与同步。完整清单见 [docs/01-prd.md](docs/01-prd.md#32-明确不做)。
+
+## 文档
+
+- [docs/README.md](docs/README.md) — 索引与需求追踪矩阵
+- [docs/09-execution-plan.md](docs/09-execution-plan.md) — M1–M5 与阶段门
+- [docs/08-decisions/](docs/08-decisions/README.md) — 5 条 ADR
+
+## 开发
+
+```bash
+npm test        # 52 项：单元/集成/属性/故障
+npm run eval    # 16 场景评测 → eval/report/report.json
+npm run perf    # 10k 事实性能测量
+```
+
+## 致谢与许可
+
+- 底座：[AieXile/dsh-memory-plugin](https://github.com/AieXile/dsh-memory-plugin) v1.6.0（MIT）——插件外壳、工具注册形态与 `supersedes` 抽象；重写范围见 [NOTICE](NOTICE)。
+- 运行时：[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（MIT）。
+- 调研对照：[dsh-mnemon](https://github.com/omdsh-dev/dsh-mnemon)、[meow-memory](https://github.com/Phant0Meow/dsh-meow-memory)、[dsh-memory](https://github.com/RestRegular/dsh-memory)、[dsh-git-memory](https://github.com/seriousz158/dsh-memory)、[dsh-peoplememory](https://github.com/whitequeen306/dsh-peoplememory)。
+- 许可：MIT，见 [LICENSE](LICENSE)。
