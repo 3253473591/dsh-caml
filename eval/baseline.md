@@ -1,6 +1,17 @@
 # 上游基线对照（ET-B）
 
-> 状态：**待执行**（G4 门因此尚未打 tag）｜ 关联：[06 测试](../docs/06-test-plan.md#基线对照-et-b)、[07 AC-11](../docs/07-acceptance.md)
+> 状态：**已执行**（2026-11-09）｜ 关联：[06 测试](../docs/06-test-plan.md#基线对照-et-b)、[07 AC-11](../docs/07-acceptance.md)
+
+## 结果
+
+| 指标 | 上游 1.6.0 | 本插件 |
+|---|---:|---:|
+| 当前值正确率（结果含新值且不含旧值） | **0/16** | 16/16 |
+| 历史可回答率（工具能返回旧值作为历史） | **0/16** | 16/16（`caml-audit` / `asOf`） |
+
+环境：Node 24.22.1 / win32 / 假 Cordis ctx（与上游 `test/host-harness.mjs` 同形），命令 `node scripts/baseline-upstream.mjs .tmp/base`。原始数据见 `eval/baseline.json`。
+
+口径说明：基线**未使用**上游的手工 `supersedes` 能力（那需要人工逐条干预，不是"同一场景自动裁决"）；上游检索把新旧值同时作为当前结果返回，因此当前值正确率为 0。两个口径不可直接相加，README 必须并列披露。
 
 ## 为什么要单独跑
 

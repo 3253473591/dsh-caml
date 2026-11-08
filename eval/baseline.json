@@ -1,0 +1,163 @@
+{
+  "environment": {
+    "upstream": "AieXile/dsh-memory-plugin@1.6.0",
+    "upstreamTestedDsh": "0.1.7-rc.2",
+    "harness": "fake Cordis ctx (same shape as upstream test/host-harness.mjs)",
+    "node": "v24.22.1",
+    "platform": "win32",
+    "workdir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\caml-baseline-8HvW0A"
+  },
+  "command": "node scripts/baseline-upstream.mjs D:\\AAA_Code_Project\\dsh-conflict-aware Memory Layer\\.tmp\\base",
+  "metrics": {
+    "currentValueCorrect": 0,
+    "historyAnswerable": 0,
+    "total": 16
+  },
+  "note": "currentValueCorrect = result contains new value and not the stale one; historyAnswerable = a tool can return the old value as history (upstream has no timeline).",
+  "cases": [
+    {
+      "id": "求职-城市",
+      "keyword": "目标城市",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "求职-岗位",
+      "keyword": "目标岗位",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "求职-雇主",
+      "keyword": "当前雇主",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "求职-薪资",
+      "keyword": "期望薪资",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "求职-三连",
+      "keyword": "目标城市",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "求职-改回",
+      "keyword": "目标城市",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "企业-负责人",
+      "keyword": "支付项目",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "企业-值班",
+      "keyword": "值班",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "企业-审批",
+      "keyword": "审批",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "企业-三任",
+      "keyword": "项目",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "企业-回查",
+      "keyword": "项目",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "旅游-住宿",
+      "keyword": "住宿",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "旅游-漂移",
+      "keyword": "住宿",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "旅游-交通",
+      "keyword": "交通",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "旅游-餐饮",
+      "keyword": "餐饮",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    },
+    {
+      "id": "旅游-混合",
+      "keyword": "偏好",
+      "resultContainsNew": true,
+      "resultContainsOld": true,
+      "currentValueCorrect": false,
+      "historyAnswerable": false,
+      "note": "both values returned as current"
+    }
+  ]
+}
