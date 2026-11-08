@@ -18,6 +18,24 @@ import type {
 
 const FUTURE_SKEW_MS = 5 * 60 * 1000
 const DEFAULT_LIMIT = 20
+const DEFAULT_BUSY_TIMEOUT_MS = 2_000
+const DEFAULT_RETRY_COUNT = 2
+const DEFAULT_RETRY_DELAY_MS = 50
+
+export interface StoreOptions {
+  busyTimeoutMs?: number
+  retryCount?: number
+  retryDelayMs?: number
+}
+
+const isBusy = (error: unknown): boolean => {
+  if (typeof error !== 'object' || error === null) return false
+  const code = (error as { code?: unknown }).code
+  const errcode = (error as { errcode?: unknown }).errcode
+  return code === 'ERR_SQLITE_ERROR' && (errcode === 5 || errcode === 6)
+}
+
+const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms))
 
 const ACTION_BY_STRATEGY: Record<Exclude<Strategy, 'weighted_decay'>, RememberResult['action']> = {
   supersede: 'superseded',
@@ -82,9 +100,27 @@ const INSERT_FACT = `INSERT INTO facts
 
 export class SqliteStore implements FactStore {
   readonly #db: DatabaseSync
+  readonly #retryCount: number
+  readonly #retryDelayMs: number
 
-  constructor(db: DatabaseSync) {
+  constructor(db: DatabaseSync, options: StoreOptions = {}) {
     this.#db = db
+    this.#retryCount = options.retryCount ?? DEFAULT_RETRY_COUNT
+    this.#retryDelayMs = options.retryDelayMs ?? DEFAULT_RETRY_DELAY_MS
+  }
+
+  async #write<T>(operation: () => T): Promise<T> {
+    for (let attempt = 0; ; attempt += 1) {
+      try {
+        return operation()
+      } catch (error) {
+        if (!isBusy(error)) throw error
+        if (attempt >= this.#retryCount) {
+          throw new CamlError('ERR-STORE-002', '记忆库正被占用，请稍后重试', { retryable: true })
+        }
+        await sleep(this.#retryDelayMs)
+      }
+    }
   }
 
   async current(subject: string, predicate: string): Promise<Fact[]> {
@@ -143,7 +179,7 @@ export class SqliteStore implements FactStore {
         sourceSession: input.sourceSession ?? null,
         metadata: input.metadata ?? null,
       }
-      this.#insertFact(fact)
+      await this.#write(() => this.#insertFact(fact))
       return { fact, action: 'created' }
     }
 
@@ -162,7 +198,7 @@ export class SqliteStore implements FactStore {
       newFactId: id,
       newAdjudicationId: newAdjudicationId(now),
     })
-    this.#applyPlan(plan)
+    await this.#write(() => this.#applyPlan(plan))
 
     return {
       fact: plan.insert,
@@ -373,7 +409,7 @@ export class SqliteStore implements FactStore {
 }
 
 /** Open (or create) the database at `dbPath`, apply pragmas and migrate the schema. */
-export async function openStore(dbPath: string): Promise<SqliteStore> {
+export async function openStore(dbPath: string, options: StoreOptions = {}): Promise<SqliteStore> {
   let db: DatabaseSync
   try {
     db = new DatabaseSync(dbPath)
@@ -385,7 +421,7 @@ export async function openStore(dbPath: string): Promise<SqliteStore> {
 
   try {
     db.exec('PRAGMA journal_mode = WAL')
-    db.exec('PRAGMA busy_timeout = 2000')
+    db.exec(`PRAGMA busy_timeout = ${options.busyTimeoutMs ?? DEFAULT_BUSY_TIMEOUT_MS}`)
     db.exec('PRAGMA foreign_keys = ON')
     ensureSchema(db)
   } catch (error) {
@@ -396,5 +432,5 @@ export async function openStore(dbPath: string): Promise<SqliteStore> {
     })
   }
 
-  return new SqliteStore(db)
+  return new SqliteStore(db, options)
 }
