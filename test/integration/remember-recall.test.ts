@@ -94,6 +94,15 @@ test('recall honours the limit and reports truncation', async () => {
   })
 })
 
+test('recall orders by weight then valid_from descending', async () => {
+  await withStore(async (store) => {
+    await store.remember({ subject: '我', predicate: '城市甲', object: 'A', observedAt: 1_000 })
+    await store.remember({ subject: '我', predicate: '城市乙', object: 'B', observedAt: 2_000 })
+    const recalled = await store.recall({})
+    assert.deepEqual(recalled.facts.map((fact) => fact.object), ['B', 'A'])
+  })
+})
+
 test('recall treats LIKE wildcards as literals', async () => {
   await withStore(async (store) => {
     await store.remember({ subject: '我', predicate: '折扣', object: '50%', observedAt: 1_000 })
