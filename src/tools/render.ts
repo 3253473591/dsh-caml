@@ -62,7 +62,7 @@ export function renderAudit(_args: unknown, value: unknown): TextBlock[] {
     summary: { versions: number; current: FactView | null }
     timeline?: Array<{ object: string; status: string; validFrom: string; validUntil: string | null }>
   }
-  const current = summary.current === null ? '无' : short(summary.current)
+  const current = summary.current === null ? '无' : `[${summary.current.status}] ${summary.current.object}`
   const header = `${subject} · ${predicate}：${summary.versions} 个版本，当前 ${current}`
   const lines = (timeline ?? []).map((entry, index) => {
     const until = entry.validUntil === null ? '至今' : entry.validUntil
