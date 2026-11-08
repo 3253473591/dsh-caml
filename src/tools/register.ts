@@ -8,7 +8,7 @@ export interface ToolRegistration {
   name: string
   description: string
   parameters: unknown
-  output: { schema: unknown; render: (value: unknown) => string }
+  output: { schema: unknown; render: (args: unknown, value: unknown) => Array<{ type: 'text'; text: string }> }
   execute: (args: unknown) => Promise<unknown>
 }
 
