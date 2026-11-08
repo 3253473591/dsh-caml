@@ -68,16 +68,19 @@ test('one write with several current facts still yields one log row', () => {
   assert.deepEqual(plan.log.conflictFactIds, ['f_old', 'f_old2'])
 })
 
-test('weighted decay is not implemented yet', () => {
-  assert.throws(
-    () => planAdjudication({
-      current: [fact()],
-      incoming,
-      strategy: 'weighted_decay',
-      now: 3_000,
-      newFactId: 'f_new',
-      newAdjudicationId: 'a_1',
-    }),
-    (error: unknown) => error instanceof CamlError && error.code === 'ERR-INT-001',
-  )
+test('weighted decay keeps the window open and lowers the weight', () => {
+  const plan = planAdjudication({
+    current: [fact({ weight: 0.8 })],
+    incoming,
+    strategy: 'weighted_decay',
+    now: 3_000,
+    newFactId: 'f_new',
+    newAdjudicationId: 'a_1',
+    decayFactor: 0.5,
+  })
+
+  assert.deepEqual(plan.close, [])
+  assert.deepEqual(plan.decay, [{ id: 'f_old', weight: 0.4, status: 'decayed' }])
+  assert.equal(plan.relations[0]?.relationType, 'DECAYS_FROM')
+  assert.equal(plan.insert.weight, 1)
 })

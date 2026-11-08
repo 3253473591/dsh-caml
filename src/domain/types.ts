@@ -32,6 +32,7 @@ export interface NewFactInput {
   sourceSession?: string | null
   metadata?: Record<string, unknown> | null
   strategy?: Strategy
+  decayFactor?: number
 }
 
 export interface AdjudicationPlan {
@@ -41,6 +42,11 @@ export interface AdjudicationPlan {
     validUntil: number
     status: 'superseded'
     supersededBy: string
+  }>
+  decay: Array<{
+    id: string
+    weight: number
+    status: 'decayed'
   }>
   relations: Array<{
     fromFactId: string

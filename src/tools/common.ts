@@ -1,4 +1,14 @@
 import { CamlError } from '../errors.js'
+import type { Strategy } from '../domain/types.js'
+
+const STRATEGIES: readonly Strategy[] = ['supersede', 'versioned_transfer', 'weighted_decay']
+
+export function assertStrategy(value: unknown): Strategy {
+  if (typeof value !== 'string' || !STRATEGIES.includes(value as Strategy)) {
+    throw new CamlError('ERR-CONF-003', `未知策略：${String(value)}；可选值 ${STRATEGIES.join(' / ')}`)
+  }
+  return value as Strategy
+}
 
 export function parseIso(value: unknown, field: string): number {
   if (typeof value !== 'string') {

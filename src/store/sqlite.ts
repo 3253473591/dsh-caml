@@ -37,9 +37,10 @@ const isBusy = (error: unknown): boolean => {
 
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms))
 
-const ACTION_BY_STRATEGY: Record<Exclude<Strategy, 'weighted_decay'>, RememberResult['action']> = {
+const ACTION_BY_STRATEGY: Record<Strategy, RememberResult['action']> = {
   supersede: 'superseded',
   versioned_transfer: 'transferred',
+  weighted_decay: 'decayed',
 }
 
 interface FactRow {
@@ -197,12 +198,13 @@ export class SqliteStore implements FactStore {
       now,
       newFactId: id,
       newAdjudicationId: newAdjudicationId(now),
+      decayFactor: input.decayFactor,
     })
     await this.#write(() => this.#applyPlan(plan))
 
     return {
       fact: plan.insert,
-      action: ACTION_BY_STRATEGY[strategy as Exclude<Strategy, 'weighted_decay'>],
+      action: ACTION_BY_STRATEGY[strategy],
       strategy,
       adjudication: {
         id: plan.log.id,
@@ -220,13 +222,16 @@ export class SqliteStore implements FactStore {
 
   async recall(query: RecallQuery = {}): Promise<RecallResult> {
     const limit = query.limit ?? DEFAULT_LIMIT
-    const where: string[] = ['valid_until IS NULL']
+    const where: string[] = []
     const params: (string | number)[] = []
 
-    if (query.includeDecayed === true) {
-      where.push("status IN ('active','decayed')")
+    if (query.asOf !== undefined) {
+      where.push('valid_from <= ?')
+      where.push('(valid_until IS NULL OR valid_until > ?)')
+      params.push(query.asOf, query.asOf)
     } else {
-      where.push("status = 'active'")
+      where.push('valid_until IS NULL')
+      where.push(query.includeDecayed === true ? "status IN ('active','decayed')" : "status = 'active'")
     }
     if (query.subject !== undefined) {
       where.push('subject = ?')
@@ -372,6 +377,11 @@ export class SqliteStore implements FactStore {
       )
       for (const entry of plan.close) {
         close.run(entry.validUntil, entry.status, entry.supersededBy, entry.id)
+      }
+
+      const decay = this.#db.prepare('UPDATE facts SET weight = ?, status = ? WHERE id = ?')
+      for (const entry of plan.decay) {
+        decay.run(entry.weight, entry.status, entry.id)
       }
 
       this.#insertFact(plan.insert)

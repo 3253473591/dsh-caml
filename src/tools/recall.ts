@@ -31,7 +31,7 @@ export function makeRecallTool(store: FactStore, config: CamlConfig): ToolRegist
         predicate: optionalString(input.predicate),
         query: optionalQuery(input.query),
         includeDecayed: input.includeDecayed === true,
-        minWeight: minWeight ?? config.strategies.minWeight,
+        minWeight: minWeight ?? (asOf === undefined ? config.strategies.minWeight : undefined),
         limit: assertLimit(input.limit),
         asOf,
       })
