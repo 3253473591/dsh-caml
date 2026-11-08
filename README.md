@@ -70,7 +70,7 @@ config:
 |---|---:|---:|---|
 | `caml-remember` | 2.6 ms | ≤ 5 ms | ✅ |
 | `caml-audit` | 5.7 ms | ≤ 20 ms | ✅ |
-| `caml-recall`（无关键词） | 22.2 ms | ≤ 15 ms | ❌ 未达标 |
+| `caml-recall`（无关键词） | 23.8 ms | ≤ 15 ms | ❌ 未达标（p50 7.0 ms；语句缓存后仍高于阈值） |
 
 原始数据 [evidence/AC-7/perf.json](evidence/AC-7/perf.json)。recall 的 p95 未达标是当前已知缺口，未用改阈值的方式掩盖。
 

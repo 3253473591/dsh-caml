@@ -106,7 +106,25 @@ export class SqliteStore implements FactStore {
   readonly #retryDelayMs: number
 
   constructor(db: DatabaseSync, options: StoreOptions = {}) {
-    this.#db = db
+    // Both node:sqlite and better-sqlite3 re-compile every prepare() call.
+    // Caching by SQL text keeps the hot read path at execute cost instead of
+    // paying parse/plan per recall (~10ms at 10k facts on this machine).
+    const statements = new Map<string, ReturnType<DatabaseSync['prepare']>>()
+    this.#db = new Proxy(db, {
+      get: (target, property) => {
+        if (property === 'prepare') {
+          return (sql: string) => {
+            const cached = statements.get(sql)
+            if (cached !== undefined) return cached
+            const created = target.prepare(sql)
+            statements.set(sql, created)
+            return created
+          }
+        }
+        const value = Reflect.get(target, property, target)
+        return typeof value === 'function' ? value.bind(target) : value
+      },
+    }) as DatabaseSync
     this.#retryCount = options.retryCount ?? DEFAULT_RETRY_COUNT
     this.#retryDelayMs = options.retryDelayMs ?? DEFAULT_RETRY_DELAY_MS
   }
