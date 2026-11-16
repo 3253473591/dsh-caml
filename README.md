@@ -4,7 +4,7 @@ CAML（Conflict-Aware Memory Layer）：DSH 记忆插件的**冲突裁决层**�
 
 > 一句话：给 DSH 写了一个会**裁决记忆冲突**的插件——冲突评测 16/16，同类上游插件 0/16。
 
-> 状态：实现完成，tag **`v1.0.0-rc.1`**。AC-6 已在真实 DSH 0.2.1-rc.2 验证；AC-7 的 `caml-recall` p95 23.8ms 未达 15ms 阈值（准确性优先，已知差距）。
+> 状态：实现完成，tag **`v1.0.0-rc.1`**；之后进入评测扩展（命中率）阶段。**当前进度与路线见 [docs/10-status.md](docs/10-status.md)。** AC-6 已在真实 DSH 0.2.1-rc.2 验证；AC-7 的 `caml-recall` p95 23.8ms 未达 15ms 阈值（准确性优先，已知差距）。
 
 ## 结果
 
