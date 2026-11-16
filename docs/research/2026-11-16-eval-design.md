@@ -142,7 +142,7 @@
 
 ## 10. 若批准实现的交付物
 
-1. `eval/pv/cases.json`（48 条）+ `eval/ab/cases.json`（24 条）；
+1. `eval/pv/cases.json`（64 条）+ `eval/ab/cases.json`（32 条）；
 2. `eval/run-pv.ts` 与 `eval/run-ab.ts`（复用现有 store/工具，不启动真实宿主）；
 3. 报告 JSON + README 表格；
 4. 人工评审表模板。
