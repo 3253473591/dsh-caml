@@ -8,7 +8,7 @@ import type { ToolRegistration } from './register.js'
 export function makeRecallTool(store: FactStore, config: CamlConfig): ToolRegistration {
   return {
     name: 'caml-recall',
-    description: '只读。按坐标返回当前有效事实（问"现在"用它）；只有值没有坐标时传 object 反查；问"以前"用 caml-audit。includeHistory 默认 false，为 true 时返回该坐标的全部版本（带 status），仅用于核对历史。',
+    description: '只读。用户提到或确认某个记忆细节（如"我记得是…"）时，先用 object=<值> + includeHistory=true 反查，返回该坐标的全部版本（带 status）；按坐标问"现在"用 subject/predicate；问"以前/之前"用 caml-audit。includeHistory 默认 false，不得用于默认召回。',
     parameters: {
       type: 'object',
       additionalProperties: false,
