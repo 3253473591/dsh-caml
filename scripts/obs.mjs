@@ -2,7 +2,11 @@ import { createHash } from 'node:crypto'
 
 // Minimal obs-websocket v5 client: node scripts/obs.mjs start|stop|status
 const command = (process.argv[2] ?? 'status').toLowerCase()
-const password = process.env.OBS_PASSWORD ?? 'cMlZoIdeqi46pAoB'
+const password = process.env.OBS_PASSWORD
+if (!password) {
+  console.error('set OBS_PASSWORD (obs-websocket server password) before running')
+  process.exit(1)
+}
 const requestType = command === 'start' ? 'StartRecord' : command === 'stop' ? 'StopRecord' : 'GetRecordStatus'
 
 const socket = new WebSocket('ws://127.0.0.1:4455')
