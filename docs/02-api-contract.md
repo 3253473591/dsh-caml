@@ -129,6 +129,8 @@ interface ToolRegistration {
 | `subject` | string | 否 | 归一化后精确匹配 | 不限 |
 | `predicate` | string | 否 | 精确匹配 | 不限 |
 | `query` | string | 否 | 1–200 字符；对 `subject`/`object` 做大小写不敏感子串匹配（`LIKE`，转义 `%` `_`） | 无 |
+| `object` | string | 否 | 按值精确反查（NFKC + 折叠 + casefold，与 remember 判等一致）；可与 subject/predicate 组合 | 无 |
+| `includeHistory` | boolean | 否 | `true` 时返回命中坐标的全部版本（带 status）；仅用于核对历史 | `false` |
 | `asOf` | string(ISO) | 否 | 任意合法时间；未来时间按 `now` 处理 | 无 |
 | `includeDecayed` | boolean | 否 | 是否返回被衰减但窗口未关的事实 | `false` |
 | `minWeight` | number | 否 | `[0,1]`；不给则用配置值。`asOf` 查询**默认不应用**阈值，显式传入才生效 | 配置 `minWeight` |
@@ -154,6 +156,8 @@ interface ToolRegistration {
 5. **关键词**：`query` 命中 `subject` 或 `object`。
 6. **排序**：`weight DESC, valid_from DESC, id ASC`。
 7. **截断**：取前 `limit` 条；`count` 为返回条数，`truncated` 表示是否还有更多。
+
+**按值反查（独立路径）**：传 `object` 时按归一化精确匹配；未传 `includeHistory` 时只返回 active 匹配项（通常 0 或 1 条）。传 `includeHistory: true` 时：先按值命中坐标，再展开该 `(subject, predicate)` 的**全部版本**（按 `valid_from` 升序），结果带 `status` 与时间窗；此路径不应用默认 `minWeight`，显式传入仍生效；与 `asOf` 同时出现时 `asOf` 优先。设计依据见 [ADR-0006](./08-decisions/adr-0006-object-lookup.md)。
 
 ### render 示例
 

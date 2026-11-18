@@ -13,6 +13,7 @@
 | [ADR-0003](./adr-0003-project-structure.md) | 项目结构 | `domain → store → tools → plugin` 单向依赖 | 代码组织、可测性 |
 | [ADR-0004](./adr-0004-red-lines.md) | 红线 | 10 条不可协商约束 | 范围、合规、演示口径 |
 | [ADR-0005](./adr-0005-adjudication-boundaries.md) | 边界语义 | 重复判定、日志粒度、库位置、asOf 权重、移除 `includeSuperseded` | 语义契约、测试断言 |
+| [ADR-0006](./adr-0006-object-lookup.md) | 按值反查 | `caml-recall` 增加 `object` + `includeHistory`（默认关闭，受控历史查询） | API、评测判定 |
 
 ## 模板
 

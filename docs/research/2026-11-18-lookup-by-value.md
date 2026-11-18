@@ -1,6 +1,6 @@
 # R3 · 按值反查的设计选项
 
-> 2026-11-18 ｜ 性质：设计对比（**未实现**）｜ 触发：探针发现 `contradict` 无键类必然 0 分
+> 2026-11-18 ｜ 性质：设计对比（**已实现 A 方案**，见 [ADR-0006](../08-decisions/adr-0006-object-lookup.md)）｜ 触发：探针发现 `contradict` 无键类必然 0 分
 > 关联：[R2 评测设计](./2026-11-16-eval-design.md)、[02 API](../02-api-contract.md)、[ADR-0005](../08-decisions/adr-0005-adjudication-boundaries.md)
 
 ## 问题

@@ -241,6 +241,7 @@ export class SqliteStore implements FactStore {
   }
 
   async recall(query: RecallQuery = {}): Promise<RecallResult> {
+    if (query.object !== undefined) return this.#recallByObject(query)
     const limit = query.limit ?? DEFAULT_LIMIT
     const where: string[] = []
     const params: (string | number)[] = []
@@ -281,6 +282,58 @@ export class SqliteStore implements FactStore {
 
     const truncated = rows.length > limit
     return { facts: rows.slice(0, limit).map(rowToFact), truncated }
+  }
+
+  #recallByObject(query: RecallQuery): RecallResult {
+    const limit = query.limit ?? DEFAULT_LIMIT
+    const value = query.object as string
+    const key = objectKey(value)
+    const where: string[] = ['(object = ? OR lower(object) = lower(?))']
+    const params: (string | number)[] = [value, value]
+
+    if (query.subject !== undefined) {
+      where.push('subject = ?')
+      params.push(query.subject)
+    }
+    if (query.predicate !== undefined) {
+      where.push('predicate = ?')
+      params.push(query.predicate)
+    }
+    if (query.includeHistory !== true) {
+      where.push('valid_until IS NULL', "status = 'active'")
+    }
+    if (query.minWeight !== undefined) {
+      where.push('weight >= ?')
+      params.push(query.minWeight)
+    }
+
+    const candidates = this.#db
+      .prepare(`SELECT * FROM facts WHERE ${where.join(' AND ')} ORDER BY valid_from ASC, id ASC LIMIT 1000`)
+      .all(...params) as unknown as FactRow[]
+
+    const matched = candidates.map(rowToFact).filter((fact) => objectKey(fact.object) === key)
+    if (query.includeHistory !== true) {
+      return { facts: matched.slice(0, limit), truncated: matched.length > limit }
+    }
+
+    const coordinates = new Map<string, { subject: string; predicate: string }>()
+    for (const fact of matched) {
+      coordinates.set(`${fact.subject}\u0000${fact.predicate}`, {
+        subject: fact.subject,
+        predicate: fact.predicate,
+      })
+    }
+
+    const expanded: Fact[] = []
+    const statement = this.#db.prepare(
+      'SELECT * FROM facts WHERE subject = ? AND predicate = ? ORDER BY valid_from ASC, id ASC',
+    )
+    for (const coordinate of coordinates.values()) {
+      const rows = statement.all(coordinate.subject, coordinate.predicate) as unknown as FactRow[]
+      expanded.push(...rows.map(rowToFact))
+    }
+
+    return { facts: expanded.slice(0, limit), truncated: expanded.length > limit }
   }
 
   async audit(subject: string, predicate: string, limit = 100): Promise<AuditResult> {

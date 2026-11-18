@@ -22,6 +22,10 @@ export interface RecallQuery {
   limit?: number
   /** epoch ms; T3.3 wires historical lookups */
   asOf?: number
+  /** exact (normalized, casefolded) object lookup */
+  object?: string
+  /** expand the matched coordinate to all of its versions; default false */
+  includeHistory?: boolean
 }
 
 export interface RecallResult {
