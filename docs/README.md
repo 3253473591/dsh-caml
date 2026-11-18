@@ -28,6 +28,7 @@ CAML（Conflict-Aware Memory Layer）是一个 DSH 记忆插件：它把"时间�
 | 10 | [状态与路线](./10-status.md) | 现在在哪、未决什么、下一步做什么 | 全体 | 维护中 |
 | R1 | [命中率调研](./research/2026-11-16-memory-hit-rate.md) | 评论逐条对照、三个缺口、外部基准映射 | 评审 | 归档 |
 | R2 | [评测扩展设计](./research/2026-11-16-eval-design.md) | PV/AB 设计、16 场景、探针记录 | 开发 | 草案 |
+| R3 | [按值反查设计](./research/2026-11-18-lookup-by-value.md) | 三个选项对比与推荐 | 评审 | 待选 |
 | 08 | [决策记录](./08-decisions/README.md) | 底座、技术栈、结构、红线的取舍 | 评审、继任者 | 待评审 |
 | — | [PRD V0.1](./PRD%20V0.1.md) | 历史草稿（已被 01 取代） | 归档 | 冻结 |
 
