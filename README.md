@@ -89,10 +89,14 @@ config:
 ## 开发
 
 ```bash
-npm test        # 52 项：单元/集成/属性/故障
-npm run eval    # 16 场景评测 → eval/report/report.json
-npm run perf    # 10k 事实性能测量
+npm test          # 69 项：单元/集成/属性/规模/故障/评分器
+npm run eval      # 16 场景确定性评测 → eval/report/report.json
+npm run eval:pv   # 生成 96 条 PV/AB 用例 → eval/pv-cases.json
+npm run eval:pv:score -- <records.json>   # 给录制的模型运行打分
+npm run perf      # 10k 事实性能测量
 ```
+
+PV/AB 的**录制**仍靠真实 UI 跑（见 [评测设计](docs/research/2026-11-16-eval-design.md#4-运行协议)）；runner 只做确定性断言与打分，不调用模型。
 
 ## 致谢与许可
 

@@ -1,0 +1,3570 @@
+[
+  {
+    "id": "PV-01-direct",
+    "suite": "pv",
+    "scenario": "01-目标城市",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在想去哪个城市？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "上海"
+      ],
+      "mustNotMentionAsCurrent": [
+        "杭州"
+      ]
+    }
+  },
+  {
+    "id": "PV-01-indirect",
+    "suite": "pv",
+    "scenario": "01-目标城市",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "下周去面试，通勤怎么安排？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "上海"
+      ],
+      "mustNotMentionAsCurrent": [
+        "杭州"
+      ]
+    }
+  },
+  {
+    "id": "PV-01-contradict",
+    "suite": "pv",
+    "scenario": "01-目标城市",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我记得是杭州吧？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "杭州"
+      },
+      "mustMention": [
+        "上海"
+      ],
+      "mustNotMentionAsCurrent": [
+        "杭州"
+      ]
+    }
+  },
+  {
+    "id": "PV-01-absent",
+    "suite": "pv",
+    "scenario": "01-目标城市",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "帮我写个快排。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-01-same",
+    "suite": "ab",
+    "scenario": "01-目标城市",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在想去哪个城市？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "上海"
+      ],
+      "mustNotMentionAsCurrent": [
+        "杭州"
+      ]
+    }
+  },
+  {
+    "id": "AB-01-fresh",
+    "suite": "ab",
+    "scenario": "01-目标城市",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在想去哪个城市？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "上海"
+      ],
+      "mustNotMentionAsCurrent": [
+        "杭州"
+      ]
+    }
+  },
+  {
+    "id": "PV-02-direct",
+    "suite": "pv",
+    "scenario": "02-目标岗位",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在的目标岗位是什么？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "后端",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "数据工程",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标岗位"
+      },
+      "mustMention": [
+        "数据工程"
+      ],
+      "mustNotMentionAsCurrent": [
+        "后端"
+      ]
+    }
+  },
+  {
+    "id": "PV-02-indirect",
+    "suite": "pv",
+    "scenario": "02-目标岗位",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我按目标岗位准备面试题",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "后端",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "数据工程",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标岗位"
+      },
+      "mustMention": [
+        "数据工程"
+      ],
+      "mustNotMentionAsCurrent": [
+        "后端"
+      ]
+    }
+  },
+  {
+    "id": "PV-02-contradict",
+    "suite": "pv",
+    "scenario": "02-目标岗位",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是想做后端吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "后端",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "数据工程",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "后端"
+      },
+      "mustMention": [
+        "数据工程"
+      ],
+      "mustNotMentionAsCurrent": [
+        "后端"
+      ]
+    }
+  },
+  {
+    "id": "PV-02-absent",
+    "suite": "pv",
+    "scenario": "02-目标岗位",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "推荐一部科幻电影。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-02-same",
+    "suite": "ab",
+    "scenario": "02-目标岗位",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在的目标岗位是什么？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "后端",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "数据工程",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标岗位"
+      },
+      "mustMention": [
+        "数据工程"
+      ],
+      "mustNotMentionAsCurrent": [
+        "后端"
+      ]
+    }
+  },
+  {
+    "id": "AB-02-fresh",
+    "suite": "ab",
+    "scenario": "02-目标岗位",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在的目标岗位是什么？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "后端",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标岗位",
+        "object": "数据工程",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标岗位"
+      },
+      "mustMention": [
+        "数据工程"
+      ],
+      "mustNotMentionAsCurrent": [
+        "后端"
+      ]
+    }
+  },
+  {
+    "id": "PV-03-direct",
+    "suite": "pv",
+    "scenario": "03-当前雇主",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在在哪家公司？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "甲公司",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "乙公司",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "当前雇主"
+      },
+      "mustMention": [
+        "乙公司"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲公司"
+      ]
+    }
+  },
+  {
+    "id": "PV-03-indirect",
+    "suite": "pv",
+    "scenario": "03-当前雇主",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我写一段给现在雇主的请假邮件",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "甲公司",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "乙公司",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "当前雇主"
+      },
+      "mustMention": [
+        "乙公司"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲公司"
+      ]
+    }
+  },
+  {
+    "id": "PV-03-contradict",
+    "suite": "pv",
+    "scenario": "03-当前雇主",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是在甲公司吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "甲公司",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "乙公司",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "甲公司"
+      },
+      "mustMention": [
+        "乙公司"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲公司"
+      ]
+    }
+  },
+  {
+    "id": "PV-03-absent",
+    "suite": "pv",
+    "scenario": "03-当前雇主",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "今天天气怎么样？",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-03-same",
+    "suite": "ab",
+    "scenario": "03-当前雇主",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在在哪家公司？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "甲公司",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "乙公司",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "当前雇主"
+      },
+      "mustMention": [
+        "乙公司"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲公司"
+      ]
+    }
+  },
+  {
+    "id": "AB-03-fresh",
+    "suite": "ab",
+    "scenario": "03-当前雇主",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在在哪家公司？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "甲公司",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "当前雇主",
+        "object": "乙公司",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "当前雇主"
+      },
+      "mustMention": [
+        "乙公司"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲公司"
+      ]
+    }
+  },
+  {
+    "id": "PV-04-direct",
+    "suite": "pv",
+    "scenario": "04-期望薪资",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我的期望薪资是多少？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "15k",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "20k",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "期望薪资"
+      },
+      "mustMention": [
+        "20k"
+      ],
+      "mustNotMentionAsCurrent": [
+        "15k"
+      ]
+    }
+  },
+  {
+    "id": "PV-04-indirect",
+    "suite": "pv",
+    "scenario": "04-期望薪资",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我评估这个 offer 够不够",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "15k",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "20k",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "期望薪资"
+      },
+      "mustMention": [
+        "20k"
+      ],
+      "mustNotMentionAsCurrent": [
+        "15k"
+      ]
+    }
+  },
+  {
+    "id": "PV-04-contradict",
+    "suite": "pv",
+    "scenario": "04-期望薪资",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我记得是 15k？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "15k",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "20k",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "15k"
+      },
+      "mustMention": [
+        "20k"
+      ],
+      "mustNotMentionAsCurrent": [
+        "15k"
+      ]
+    }
+  },
+  {
+    "id": "PV-04-absent",
+    "suite": "pv",
+    "scenario": "04-期望薪资",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "解释 HTTP 和 HTTPS 的区别。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-04-same",
+    "suite": "ab",
+    "scenario": "04-期望薪资",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我的期望薪资是多少？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "15k",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "20k",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "期望薪资"
+      },
+      "mustMention": [
+        "20k"
+      ],
+      "mustNotMentionAsCurrent": [
+        "15k"
+      ]
+    }
+  },
+  {
+    "id": "AB-04-fresh",
+    "suite": "ab",
+    "scenario": "04-期望薪资",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我的期望薪资是多少？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "15k",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "期望薪资",
+        "object": "20k",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "期望薪资"
+      },
+      "mustMention": [
+        "20k"
+      ],
+      "mustNotMentionAsCurrent": [
+        "15k"
+      ]
+    }
+  },
+  {
+    "id": "PV-05-direct",
+    "suite": "pv",
+    "scenario": "05-目标行业",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我想去哪个行业？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "互联网",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "新能源",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标行业"
+      },
+      "mustMention": [
+        "新能源"
+      ],
+      "mustNotMentionAsCurrent": [
+        "互联网"
+      ]
+    }
+  },
+  {
+    "id": "PV-05-indirect",
+    "suite": "pv",
+    "scenario": "05-目标行业",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我看看这个行业的公司",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "互联网",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "新能源",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标行业"
+      },
+      "mustMention": [
+        "新能源"
+      ],
+      "mustNotMentionAsCurrent": [
+        "互联网"
+      ]
+    }
+  },
+  {
+    "id": "PV-05-contradict",
+    "suite": "pv",
+    "scenario": "05-目标行业",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是想去互联网吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "互联网",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "新能源",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "互联网"
+      },
+      "mustMention": [
+        "新能源"
+      ],
+      "mustNotMentionAsCurrent": [
+        "互联网"
+      ]
+    }
+  },
+  {
+    "id": "PV-05-absent",
+    "suite": "pv",
+    "scenario": "05-目标行业",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "写一个二分查找。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-05-same",
+    "suite": "ab",
+    "scenario": "05-目标行业",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我想去哪个行业？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "互联网",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "新能源",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标行业"
+      },
+      "mustMention": [
+        "新能源"
+      ],
+      "mustNotMentionAsCurrent": [
+        "互联网"
+      ]
+    }
+  },
+  {
+    "id": "AB-05-fresh",
+    "suite": "ab",
+    "scenario": "05-目标行业",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我想去哪个行业？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "互联网",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标行业",
+        "object": "新能源",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标行业"
+      },
+      "mustMention": [
+        "新能源"
+      ],
+      "mustNotMentionAsCurrent": [
+        "互联网"
+      ]
+    }
+  },
+  {
+    "id": "PV-06-direct",
+    "suite": "pv",
+    "scenario": "06-目标城市",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在想去哪个城市？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "杭州"
+      ],
+      "mustNotMentionAsCurrent": [
+        "上海"
+      ]
+    }
+  },
+  {
+    "id": "PV-06-indirect",
+    "suite": "pv",
+    "scenario": "06-目标城市",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "按我现在想去的城市推荐租房区域",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "杭州"
+      ],
+      "mustNotMentionAsCurrent": [
+        "上海"
+      ]
+    }
+  },
+  {
+    "id": "PV-06-contradict",
+    "suite": "pv",
+    "scenario": "06-目标城市",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我记得是上海？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "上海"
+      },
+      "mustMention": [
+        "杭州"
+      ],
+      "mustNotMentionAsCurrent": [
+        "上海"
+      ]
+    }
+  },
+  {
+    "id": "PV-06-absent",
+    "suite": "pv",
+    "scenario": "06-目标城市",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "讲个笑话。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-06-same",
+    "suite": "ab",
+    "scenario": "06-目标城市",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在想去哪个城市？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "杭州"
+      ],
+      "mustNotMentionAsCurrent": [
+        "上海"
+      ]
+    }
+  },
+  {
+    "id": "AB-06-fresh",
+    "suite": "ab",
+    "scenario": "06-目标城市",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在想去哪个城市？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "上海",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "目标城市",
+        "object": "杭州",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "目标城市"
+      },
+      "mustMention": [
+        "杭州"
+      ],
+      "mustNotMentionAsCurrent": [
+        "上海"
+      ]
+    }
+  },
+  {
+    "id": "PV-07-direct",
+    "suite": "pv",
+    "scenario": "07-负责人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "支付项目现在谁负责？",
+    "given": [
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "支付项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-07-indirect",
+    "suite": "pv",
+    "scenario": "07-负责人",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "支付项目要上线，我该找谁？",
+    "given": [
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "支付项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-07-contradict",
+    "suite": "pv",
+    "scenario": "07-负责人",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "负责人不是张三吗？",
+    "given": [
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "张三"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-07-absent",
+    "suite": "pv",
+    "scenario": "07-负责人",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "帮我画个流程图。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-07-same",
+    "suite": "ab",
+    "scenario": "07-负责人",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "支付项目现在谁负责？",
+    "given": [
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "支付项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "AB-07-fresh",
+    "suite": "ab",
+    "scenario": "07-负责人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "支付项目现在谁负责？",
+    "given": [
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "支付项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "支付项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-08-direct",
+    "suite": "pv",
+    "scenario": "08-值班人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "现在谁值班？",
+    "given": [
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "王五",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "赵六",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "服务",
+        "predicate": "值班人"
+      },
+      "mustMention": [
+        "赵六"
+      ],
+      "mustNotMentionAsCurrent": [
+        "王五"
+      ]
+    }
+  },
+  {
+    "id": "PV-08-indirect",
+    "suite": "pv",
+    "scenario": "08-值班人",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "线上报警了，找谁？",
+    "given": [
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "王五",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "赵六",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "服务",
+        "predicate": "值班人"
+      },
+      "mustMention": [
+        "赵六"
+      ],
+      "mustNotMentionAsCurrent": [
+        "王五"
+      ]
+    }
+  },
+  {
+    "id": "PV-08-contradict",
+    "suite": "pv",
+    "scenario": "08-值班人",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "不是王五吗？",
+    "given": [
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "王五",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "赵六",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "王五"
+      },
+      "mustMention": [
+        "赵六"
+      ],
+      "mustNotMentionAsCurrent": [
+        "王五"
+      ]
+    }
+  },
+  {
+    "id": "PV-08-absent",
+    "suite": "pv",
+    "scenario": "08-值班人",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "总结一下这段日志。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-08-same",
+    "suite": "ab",
+    "scenario": "08-值班人",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "现在谁值班？",
+    "given": [
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "王五",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "赵六",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "服务",
+        "predicate": "值班人"
+      },
+      "mustMention": [
+        "赵六"
+      ],
+      "mustNotMentionAsCurrent": [
+        "王五"
+      ]
+    }
+  },
+  {
+    "id": "AB-08-fresh",
+    "suite": "ab",
+    "scenario": "08-值班人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "现在谁值班？",
+    "given": [
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "王五",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "服务",
+        "predicate": "值班人",
+        "object": "赵六",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "服务",
+        "predicate": "值班人"
+      },
+      "mustMention": [
+        "赵六"
+      ],
+      "mustNotMentionAsCurrent": [
+        "王五"
+      ]
+    }
+  },
+  {
+    "id": "PV-09-direct",
+    "suite": "pv",
+    "scenario": "09-审批人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "预算现在谁审批？",
+    "given": [
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "乙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "预算",
+        "predicate": "审批人"
+      },
+      "mustMention": [
+        "乙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-09-indirect",
+    "suite": "pv",
+    "scenario": "09-审批人",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "这笔预算该走谁的审批？",
+    "given": [
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "乙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "预算",
+        "predicate": "审批人"
+      },
+      "mustMention": [
+        "乙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-09-contradict",
+    "suite": "pv",
+    "scenario": "09-审批人",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "审批人不是甲吗？",
+    "given": [
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "乙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "甲"
+      },
+      "mustMention": [
+        "乙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-09-absent",
+    "suite": "pv",
+    "scenario": "09-审批人",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "写个正则匹配邮箱。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-09-same",
+    "suite": "ab",
+    "scenario": "09-审批人",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "预算现在谁审批？",
+    "given": [
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "乙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "预算",
+        "predicate": "审批人"
+      },
+      "mustMention": [
+        "乙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "AB-09-fresh",
+    "suite": "ab",
+    "scenario": "09-审批人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "预算现在谁审批？",
+    "given": [
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "预算",
+        "predicate": "审批人",
+        "object": "乙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "预算",
+        "predicate": "审批人"
+      },
+      "mustMention": [
+        "乙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-10-direct",
+    "suite": "pv",
+    "scenario": "10-负责人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "项目现在谁负责？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "丙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "丙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-10-indirect",
+    "suite": "pv",
+    "scenario": "10-负责人",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "项目交接给谁了？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "丙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "丙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-10-contradict",
+    "suite": "pv",
+    "scenario": "10-负责人",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我记得是乙？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "丙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "甲"
+      },
+      "mustMention": [
+        "丙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-10-absent",
+    "suite": "pv",
+    "scenario": "10-负责人",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "把这句话翻译成英文。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-10-same",
+    "suite": "ab",
+    "scenario": "10-负责人",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "项目现在谁负责？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "丙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "丙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "AB-10-fresh",
+    "suite": "ab",
+    "scenario": "10-负责人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "项目现在谁负责？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "甲",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "丙",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "丙"
+      ],
+      "mustNotMentionAsCurrent": [
+        "甲"
+      ]
+    }
+  },
+  {
+    "id": "PV-11-direct",
+    "suite": "pv",
+    "scenario": "11-负责人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "项目现在谁负责？之前是谁？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-11-indirect",
+    "suite": "pv",
+    "scenario": "11-负责人",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "和上一任负责人对比一下",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-11-contradict",
+    "suite": "pv",
+    "scenario": "11-负责人",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "之前不是李四吗？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "张三"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-11-absent",
+    "suite": "pv",
+    "scenario": "11-负责人",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "帮我列个提纲。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-11-same",
+    "suite": "ab",
+    "scenario": "11-负责人",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "项目现在谁负责？之前是谁？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "AB-11-fresh",
+    "suite": "ab",
+    "scenario": "11-负责人",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "项目现在谁负责？之前是谁？",
+    "given": [
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "张三",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "项目",
+        "predicate": "负责人",
+        "object": "李四",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "项目",
+        "predicate": "负责人"
+      },
+      "mustMention": [
+        "李四"
+      ],
+      "mustNotMentionAsCurrent": [
+        "张三"
+      ]
+    }
+  },
+  {
+    "id": "PV-12-direct",
+    "suite": "pv",
+    "scenario": "12-住宿偏好",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在偏好住哪种？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "青旅",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "酒店",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "住宿偏好"
+      },
+      "mustMention": [
+        "酒店"
+      ],
+      "mustNotMentionAsCurrent": [
+        "青旅"
+      ]
+    }
+  },
+  {
+    "id": "PV-12-indirect",
+    "suite": "pv",
+    "scenario": "12-住宿偏好",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我订个符合我偏好的住处",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "青旅",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "酒店",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "住宿偏好"
+      },
+      "mustMention": [
+        "酒店"
+      ],
+      "mustNotMentionAsCurrent": [
+        "青旅"
+      ]
+    }
+  },
+  {
+    "id": "PV-12-contradict",
+    "suite": "pv",
+    "scenario": "12-住宿偏好",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是喜欢青旅吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "青旅",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "酒店",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "青旅"
+      },
+      "mustMention": [
+        "酒店"
+      ],
+      "mustNotMentionAsCurrent": [
+        "青旅"
+      ]
+    }
+  },
+  {
+    "id": "PV-12-absent",
+    "suite": "pv",
+    "scenario": "12-住宿偏好",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "推荐三条徒步路线。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-12-same",
+    "suite": "ab",
+    "scenario": "12-住宿偏好",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在偏好住哪种？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "青旅",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "酒店",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "住宿偏好"
+      },
+      "mustMention": [
+        "酒店"
+      ],
+      "mustNotMentionAsCurrent": [
+        "青旅"
+      ]
+    }
+  },
+  {
+    "id": "AB-12-fresh",
+    "suite": "ab",
+    "scenario": "12-住宿偏好",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在偏好住哪种？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "青旅",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "住宿偏好",
+        "object": "酒店",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "住宿偏好"
+      },
+      "mustMention": [
+        "酒店"
+      ],
+      "mustNotMentionAsCurrent": [
+        "青旅"
+      ]
+    }
+  },
+  {
+    "id": "PV-13-direct",
+    "suite": "pv",
+    "scenario": "13-交通偏好",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在偏好怎么出行？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "火车",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "自驾",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "交通偏好"
+      },
+      "mustMention": [
+        "自驾"
+      ],
+      "mustNotMentionAsCurrent": [
+        "火车"
+      ]
+    }
+  },
+  {
+    "id": "PV-13-indirect",
+    "suite": "pv",
+    "scenario": "13-交通偏好",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "这个行程怎么安排交通？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "火车",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "自驾",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "交通偏好"
+      },
+      "mustMention": [
+        "自驾"
+      ],
+      "mustNotMentionAsCurrent": [
+        "火车"
+      ]
+    }
+  },
+  {
+    "id": "PV-13-contradict",
+    "suite": "pv",
+    "scenario": "13-交通偏好",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是坐火车吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "火车",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "自驾",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "火车"
+      },
+      "mustMention": [
+        "自驾"
+      ],
+      "mustNotMentionAsCurrent": [
+        "火车"
+      ]
+    }
+  },
+  {
+    "id": "PV-13-absent",
+    "suite": "pv",
+    "scenario": "13-交通偏好",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "比较一下两种相机。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-13-same",
+    "suite": "ab",
+    "scenario": "13-交通偏好",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在偏好怎么出行？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "火车",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "自驾",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "交通偏好"
+      },
+      "mustMention": [
+        "自驾"
+      ],
+      "mustNotMentionAsCurrent": [
+        "火车"
+      ]
+    }
+  },
+  {
+    "id": "AB-13-fresh",
+    "suite": "ab",
+    "scenario": "13-交通偏好",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在偏好怎么出行？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "火车",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "交通偏好",
+        "object": "自驾",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "交通偏好"
+      },
+      "mustMention": [
+        "自驾"
+      ],
+      "mustNotMentionAsCurrent": [
+        "火车"
+      ]
+    }
+  },
+  {
+    "id": "PV-14-direct",
+    "suite": "pv",
+    "scenario": "14-餐饮偏好",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在口味偏什么？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "辣",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "清淡",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "餐饮偏好"
+      },
+      "mustMention": [
+        "清淡"
+      ],
+      "mustNotMentionAsCurrent": [
+        "辣"
+      ]
+    }
+  },
+  {
+    "id": "PV-14-indirect",
+    "suite": "pv",
+    "scenario": "14-餐饮偏好",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "按我的口味推荐餐厅",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "辣",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "清淡",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "餐饮偏好"
+      },
+      "mustMention": [
+        "清淡"
+      ],
+      "mustNotMentionAsCurrent": [
+        "辣"
+      ]
+    }
+  },
+  {
+    "id": "PV-14-contradict",
+    "suite": "pv",
+    "scenario": "14-餐饮偏好",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是能吃辣吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "辣",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "清淡",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "辣"
+      },
+      "mustMention": [
+        "清淡"
+      ],
+      "mustNotMentionAsCurrent": [
+        "辣"
+      ]
+    }
+  },
+  {
+    "id": "PV-14-absent",
+    "suite": "pv",
+    "scenario": "14-餐饮偏好",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "解释一下光合作用。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-14-same",
+    "suite": "ab",
+    "scenario": "14-餐饮偏好",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我现在口味偏什么？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "辣",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "清淡",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "餐饮偏好"
+      },
+      "mustMention": [
+        "清淡"
+      ],
+      "mustNotMentionAsCurrent": [
+        "辣"
+      ]
+    }
+  },
+  {
+    "id": "AB-14-fresh",
+    "suite": "ab",
+    "scenario": "14-餐饮偏好",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我现在口味偏什么？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "辣",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "餐饮偏好",
+        "object": "清淡",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "餐饮偏好"
+      },
+      "mustMention": [
+        "清淡"
+      ],
+      "mustNotMentionAsCurrent": [
+        "辣"
+      ]
+    }
+  },
+  {
+    "id": "PV-15-direct",
+    "suite": "pv",
+    "scenario": "15-旅行目的地",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我下次想去哪？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "云南",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "新疆",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行目的地"
+      },
+      "mustMention": [
+        "新疆"
+      ],
+      "mustNotMentionAsCurrent": [
+        "云南"
+      ]
+    }
+  },
+  {
+    "id": "PV-15-indirect",
+    "suite": "pv",
+    "scenario": "15-旅行目的地",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我做下个月的行程预算",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "云南",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "新疆",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行目的地"
+      },
+      "mustMention": [
+        "新疆"
+      ],
+      "mustNotMentionAsCurrent": [
+        "云南"
+      ]
+    }
+  },
+  {
+    "id": "PV-15-contradict",
+    "suite": "pv",
+    "scenario": "15-旅行目的地",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "不是云南吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "云南",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "新疆",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "云南"
+      },
+      "mustMention": [
+        "新疆"
+      ],
+      "mustNotMentionAsCurrent": [
+        "云南"
+      ]
+    }
+  },
+  {
+    "id": "PV-15-absent",
+    "suite": "pv",
+    "scenario": "15-旅行目的地",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "写一首五言绝句。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-15-same",
+    "suite": "ab",
+    "scenario": "15-旅行目的地",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我下次想去哪？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "云南",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "新疆",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行目的地"
+      },
+      "mustMention": [
+        "新疆"
+      ],
+      "mustNotMentionAsCurrent": [
+        "云南"
+      ]
+    }
+  },
+  {
+    "id": "AB-15-fresh",
+    "suite": "ab",
+    "scenario": "15-旅行目的地",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我下次想去哪？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "云南",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行目的地",
+        "object": "新疆",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行目的地"
+      },
+      "mustMention": [
+        "新疆"
+      ],
+      "mustNotMentionAsCurrent": [
+        "云南"
+      ]
+    }
+  },
+  {
+    "id": "PV-16-direct",
+    "suite": "pv",
+    "scenario": "16-旅行节奏",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我喜欢什么旅行节奏？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "特种兵",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "慢旅行",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行节奏"
+      },
+      "mustMention": [
+        "慢旅行"
+      ],
+      "mustNotMentionAsCurrent": [
+        "特种兵"
+      ]
+    }
+  },
+  {
+    "id": "PV-16-indirect",
+    "suite": "pv",
+    "scenario": "16-旅行节奏",
+    "promptClass": "indirect",
+    "session": "fresh",
+    "prompt": "帮我排一个五天的行程",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "特种兵",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "慢旅行",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行节奏"
+      },
+      "mustMention": [
+        "慢旅行"
+      ],
+      "mustNotMentionAsCurrent": [
+        "特种兵"
+      ]
+    }
+  },
+  {
+    "id": "PV-16-contradict",
+    "suite": "pv",
+    "scenario": "16-旅行节奏",
+    "promptClass": "contradict",
+    "session": "fresh",
+    "prompt": "我不是喜欢特种兵式吗？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "特种兵",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "慢旅行",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "object": "特种兵"
+      },
+      "mustMention": [
+        "慢旅行"
+      ],
+      "mustNotMentionAsCurrent": [
+        "特种兵"
+      ]
+    }
+  },
+  {
+    "id": "PV-16-absent",
+    "suite": "pv",
+    "scenario": "16-旅行节奏",
+    "promptClass": "absent",
+    "session": "fresh",
+    "prompt": "介绍一个历史人物。",
+    "given": [],
+    "expect": {
+      "mustCall": [],
+      "mustNotCall": [
+        "caml-recall",
+        "caml-audit",
+        "caml-remember"
+      ],
+      "mustMention": [],
+      "mustNotMentionAsCurrent": []
+    }
+  },
+  {
+    "id": "AB-16-same",
+    "suite": "ab",
+    "scenario": "16-旅行节奏",
+    "promptClass": "direct",
+    "session": "same",
+    "prompt": "我喜欢什么旅行节奏？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "特种兵",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "慢旅行",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行节奏"
+      },
+      "mustMention": [
+        "慢旅行"
+      ],
+      "mustNotMentionAsCurrent": [
+        "特种兵"
+      ]
+    }
+  },
+  {
+    "id": "AB-16-fresh",
+    "suite": "ab",
+    "scenario": "16-旅行节奏",
+    "promptClass": "direct",
+    "session": "fresh",
+    "prompt": "我喜欢什么旅行节奏？",
+    "given": [
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "特种兵",
+        "observedAt": "2026-10-01T00:00:00Z"
+      },
+      {
+        "subject": "我",
+        "predicate": "旅行节奏",
+        "object": "慢旅行",
+        "observedAt": "2026-11-01T00:00:00Z"
+      }
+    ],
+    "expect": {
+      "mustCall": [
+        "caml-recall"
+      ],
+      "mustNotCall": [
+        "caml-remember",
+        "caml-audit"
+      ],
+      "args": {
+        "subject": "我",
+        "predicate": "旅行节奏"
+      },
+      "mustMention": [
+        "慢旅行"
+      ],
+      "mustNotMentionAsCurrent": [
+        "特种兵"
+      ]
+    }
+  }
+]
